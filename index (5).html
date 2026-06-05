@@ -1,0 +1,2169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Statistical Tests Reference</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #fafaf8;
+    --surface:   #f4f3ef;
+    --card:      #ffffff;
+    --border:    #e8e6df;
+    --border2:   #d6d3ca;
+    --text:      #1a1917;
+    --muted:     #8a8680;
+    --muted2:    #5c5a56;
+
+    --purple:    #6c3fc4;
+    --purple-bg: #f0eafa;
+    --purple-bd: #cdbff0;
+
+    --orange:    #c2510a;
+    --orange-bg: #fef3e8;
+    --orange-bd: #f7c89a;
+
+    --blue:      #1a52cc;
+    --blue-bg:   #eaf0fd;
+    --blue-bd:   #b3c8f7;
+
+    --pink:      #a31560;
+    --pink-bg:   #fdeef6;
+    --pink-bd:   #f4b3d8;
+
+    --green:     #1a7a3e;
+    --green-bg:  #eaf7ee;
+    --green-bd:  #9edcb4;
+
+    --amber:     #a05c0a;
+    --amber-bg:  #fef8e7;
+    --amber-bd:  #f5d98a;
+
+    --code-bg:   #fdfdfc;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    padding: 52px 28px 72px;
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+
+  /* ── Header ── */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 52px;
+    padding-bottom: 28px;
+    border-bottom: 1.5px solid var(--border);
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--purple);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 38px;
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+  }
+
+  .header-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    color: var(--muted);
+    text-align: right;
+    line-height: 2;
+  }
+
+  /* ── Flowchart section ── */
+  .flowchart-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--purple);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 18px;
+  }
+
+  .flowchart-wrap {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 20px 20px;
+    margin-bottom: 44px;
+    overflow-x: auto;
+  }
+
+  /* ── Legend ── */
+  .legend {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+    padding: 16px 20px;
+    background: var(--surface);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted2);
+    letter-spacing: 0.04em;
+  }
+
+  .legend-dot {
+    width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0;
+  }
+
+  /* ── Table ── */
+  .table-wrap {
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    overflow-x: auto;
+    background: var(--card);
+  }
+
+  table { width: 100%; border-collapse: collapse; }
+
+  .section-row td {
+    background: var(--surface);
+    padding: 11px 24px;
+    border-bottom: 1px solid var(--border2);
+    border-top: 1.5px solid var(--border2);
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-line { flex: 1; height: 1px; background: var(--border2); opacity: 0.6; }
+
+  thead th {
+    background: var(--surface);
+    padding: 16px 24px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    font-weight: 500;
+    border-bottom: 1.5px solid var(--border2);
+    white-space: nowrap;
+  }
+
+  thead th:first-child  { width: 13%; }
+  thead th:nth-child(2) { width: 26%; }
+  thead th:nth-child(3) { width: 61%; }
+
+  tbody tr.data-row {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.12s;
+  }
+  tbody tr.data-row:hover { background: #f7f6f2; }
+  tbody tr.data-row:last-child { border-bottom: none; }
+
+  td { padding: 18px 18px; vertical-align: top; }
+
+  /* Test name cell */
+  .test-name {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.25;
+    margin-bottom: 7px;
+    letter-spacing: -0.1px;
+  }
+
+  .test-type-pill {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 8.5px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 7px;
+  }
+
+  .pill-param    { background: var(--blue-bg);   color: var(--blue);   border: 1px solid var(--blue-bd); }
+  .pill-nonpar   { background: var(--pink-bg);   color: var(--pink);   border: 1px solid var(--pink-bd); }
+  .pill-anova    { background: var(--green-bg);  color: var(--green);  border: 1px solid var(--green-bd); }
+  .pill-posthoc  { background: var(--amber-bg);  color: var(--amber);  border: 1px solid var(--amber-bd); }
+  .pill-normal   { background: var(--purple-bg); color: var(--purple); border: 1px solid var(--purple-bd); }
+  .pill-variance { background: var(--orange-bg); color: var(--orange); border: 1px solid var(--orange-bd); }
+
+  .test-note {
+    font-size: 11.5px;
+    color: var(--muted);
+    line-height: 1.55;
+    margin-top: 4px;
+  }
+
+  /* Equation cell */
+  .eq-cell {
+    font-family: 'DM Mono', monospace;
+    padding-right: 8px;
+  }
+
+  .eq-main {
+    font-size: 13px;
+    color: var(--amber);
+    font-weight: 500;
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+
+  /* Fraction layout */
+  .eq-frac {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle;
+    margin: 0 5px;
+    gap: 2px;
+  }
+  .eq-num {
+    border-bottom: 1.5px solid var(--amber);
+    padding: 2px 8px 3px;
+    text-align: center;
+    white-space: nowrap;
+    min-width: 20px;
+  }
+  .eq-den {
+    padding: 3px 8px 2px;
+    text-align: center;
+    white-space: nowrap;
+    min-width: 20px;
+  }
+  .eq-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: nowrap;
+    line-height: 2.6;
+    padding: 4px 0;
+  }
+
+  .eq-vars {
+    font-size: 10.5px;
+    color: var(--muted2);
+    line-height: 2;
+    border-left: 2px solid var(--amber-bd);
+    padding-left: 10px;
+    margin-top: 2px;
+  }
+  .eq-vars span { color: var(--amber); font-weight: 600; }
+
+  /* Code cell */
+  .code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    padding: 16px 18px;
+    position: relative;
+    overflow-x: auto;
+  }
+
+  .code-block pre {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    line-height: 1.8;
+    color: #1a1917;
+    white-space: pre-wrap;
+    word-break: break-all;
+    tab-size: 4;
+  }
+
+  .k  { color: #6c3fc4; font-weight: 500; }
+  .f  { color: #0d5fa3; }
+  .s  { color: #1a7a3e; }
+  .c  { color: #a8a49e; font-style: italic; }
+  .n  { color: #a05c0a; }
+  .v  { color: #1a1917; }
+  .m  { color: #0f776e; }
+  .p  { color: #c2510a; }
+
+  .copy-btn {
+    position: absolute;
+    top: 10px; right: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: 5px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 8.5px;
+    padding: 4px 10px;
+    cursor: pointer;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: all 0.15s;
+  }
+  .copy-btn:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
+
+  /* Row left accent bars */
+  tr.row-param td:first-child    { border-left: 3px solid var(--blue); }
+  tr.row-nonpar td:first-child   { border-left: 3px solid var(--pink); }
+  tr.row-anova td:first-child    { border-left: 3px solid var(--green); }
+  tr.row-posthoc td:first-child  { border-left: 3px solid var(--amber); }
+  tr.row-normal td:first-child   { border-left: 3px solid var(--purple); }
+  tr.row-variance td:first-child { border-left: 3px solid var(--orange); }
+
+  /* ── Footer ── */
+  .footer {
+    margin-top: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 20px 0 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    line-height: 1.9;
+  }
+  .footer-note strong { color: var(--muted2); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="eyebrow">Statistical Reference</div>
+    <h1>Tests, Equations &amp; Python</h1>
+  </div>
+  <div class="header-note">
+    scipy &nbsp;·&nbsp; pingouin &nbsp;·&nbsp; statsmodels<br>
+    Ready to paste into Google Colab
+  </div>
+</div>
+
+<!-- ── FLOWCHART ── -->
+<div class="flowchart-wrap">
+  <div class="flowchart-label">Decision Flowchart — Numerical Data</div>
+  <div>
+  <svg viewBox="0 0 1620 780" xmlns="http://www.w3.org/2000/svg" style="width:100%;min-width:1200px;font-family:'DM Sans',Helvetica,Arial,sans-serif;">
+    <defs>
+      <marker id="ah"  markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#b0aca4"/></marker>
+      <marker id="ag"  markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#1a8a44"/></marker>
+      <marker id="ar"  markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#c0341a"/></marker>
+      <marker id="ao"  markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#d97706"/></marker>
+    </defs>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         GRID
+         C1 Hub      x=16   w=144
+         C2 Org      x=204  w=148
+         C3 Norm     x=394  w=152
+         C4 Var      x=594  w=152   (R1 only)
+         C5 Outcome  x=800  w=172
+         C6 PostHoc  x=1026 w=152
+
+         9 outcome slots, h=56 each, gap=34 → total=(56+34)*9-34=846 > 820
+         Use gap=30: (56+30)*9-30=744, starts y=38
+         Slot tops: 38 + i*86
+         i=0 → 38   Student's
+         i=1 → 124  Welch's
+         i=2 → 210  Mann-Whitney
+         i=3 → 296  Paired t-test
+         i=4 → 382  Wilcoxon
+         i=5 → 468  One-Way ANOVA
+         i=6 → 554  Kruskal-Wallis
+         centres: 66, 152, 238, 324, 410, 496, 582
+    ═══════════════════════════════════════════════════════════════════ -->
+
+    <!-- ────────────────── C1: Hub ────────────────── -->
+    <rect x="16" y="200" width="144" height="240" rx="10" fill="#eaf7ee" stroke="#9edcb4" stroke-width="2"/>
+    <text x="88" y="298" text-anchor="middle" font-size="13" font-weight="700" fill="#1a5c30" letter-spacing="0">How</text>
+    <text x="88" y="314" text-anchor="middle" font-size="13" font-weight="700" fill="#1a5c30">numerical</text>
+    <text x="88" y="330" text-anchor="middle" font-size="13" font-weight="700" fill="#1a5c30">data are</text>
+    <text x="88" y="346" text-anchor="middle" font-size="13" font-weight="700" fill="#1a5c30">organised</text>
+
+    <!-- Hub spokes → row centres R1=152 R2=324 R3=496 -->
+    <line x1="160" y1="278" x2="204" y2="152" stroke="#b0aca4" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#ah)"/>
+    <line x1="160" y1="320" x2="204" y2="324" stroke="#b0aca4" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#ah)"/>
+    <line x1="160" y1="370" x2="204" y2="496" stroke="#b0aca4" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#ah)"/>
+
+    <!-- ────────────────── C2: Organisation labels ────────────────── -->
+    <!-- R1 centre=152 → box y=126 h=52 -->
+    <rect x="204" y="126" width="148" height="52" rx="8" fill="#f4f3ef" stroke="#d6d3ca" stroke-width="1.5"/>
+    <text x="278" y="147" text-anchor="middle" font-size="10" font-weight="700" fill="#2a2825">2 independent</text>
+    <text x="278" y="163" text-anchor="middle" font-size="10" fill="#6b6760">groups · unpaired</text>
+
+    <!-- R2 centre=324 → box y=298 -->
+    <rect x="204" y="298" width="148" height="52" rx="8" fill="#f4f3ef" stroke="#d6d3ca" stroke-width="1.5"/>
+    <text x="278" y="319" text-anchor="middle" font-size="10" font-weight="700" fill="#2a2825">2 paired /</text>
+    <text x="278" y="335" text-anchor="middle" font-size="10" fill="#6b6760">matched groups</text>
+
+    <!-- R3 centre=496 → box y=470 -->
+    <rect x="204" y="470" width="148" height="52" rx="8" fill="#f4f3ef" stroke="#d6d3ca" stroke-width="1.5"/>
+    <text x="278" y="491" text-anchor="middle" font-size="10" font-weight="700" fill="#2a2825">3 or more</text>
+    <text x="278" y="507" text-anchor="middle" font-size="10" fill="#6b6760">groups</text>
+
+
+    <!-- C2 → C3 connectors -->
+    <line x1="352" y1="152" x2="394" y2="152" stroke="#b0aca4" stroke-width="1.5" marker-end="url(#ah)"/>
+    <line x1="352" y1="324" x2="394" y2="324" stroke="#b0aca4" stroke-width="1.5" marker-end="url(#ah)"/>
+    <line x1="352" y1="496" x2="394" y2="496" stroke="#b0aca4" stroke-width="1.5" marker-end="url(#ah)"/>
+
+    <!-- ────────────────── C3: Normality boxes ────────────────── -->
+    <rect x="394" y="126" width="152" height="52" rx="8" fill="#f0eafa" stroke="#cdbff0" stroke-width="1.5"/>
+    <text x="470" y="145" text-anchor="middle" font-size="10" font-weight="700" fill="#6c3fc4">Normal dist.?</text>
+    <text x="470" y="160" text-anchor="middle" font-size="9" fill="#7c55c8">Shapiro-Wilk</text>
+    <text x="470" y="172" text-anchor="middle" font-size="8.5" fill="#a389d8">p &gt; 0.05 = normal</text>
+
+    <rect x="394" y="298" width="152" height="52" rx="8" fill="#f0eafa" stroke="#cdbff0" stroke-width="1.5"/>
+    <text x="470" y="317" text-anchor="middle" font-size="10" font-weight="700" fill="#6c3fc4">Normal dist.?</text>
+    <text x="470" y="332" text-anchor="middle" font-size="9" fill="#7c55c8">Shapiro-Wilk</text>
+    <text x="470" y="344" text-anchor="middle" font-size="8.5" fill="#a389d8">p &gt; 0.05 = normal</text>
+
+    <rect x="394" y="470" width="152" height="52" rx="8" fill="#f0eafa" stroke="#cdbff0" stroke-width="1.5"/>
+    <text x="470" y="489" text-anchor="middle" font-size="10" font-weight="700" fill="#6c3fc4">Normal dist.?</text>
+    <text x="470" y="504" text-anchor="middle" font-size="9" fill="#7c55c8">Shapiro-Wilk</text>
+    <text x="470" y="516" text-anchor="middle" font-size="8.5" fill="#a389d8">p &gt; 0.05 = normal</text>
+
+
+    <!-- ════════════════════════════════════════════
+         R1: Yes → Variance box → Student's / Welch's
+             No  → Mann-Whitney (long diagonal)
+    ════════════════════════════════════════════ -->
+
+    <!-- R1 Normality Yes → Variance box (horizontal, y=152) -->
+    <line x1="546" y1="152" x2="594" y2="152" stroke="#1a8a44" stroke-width="1.8" marker-end="url(#ag)"/>
+    <text x="570" y="143" text-anchor="middle" font-size="11" font-weight="700" fill="#1a8a44">Yes</text>
+
+    <!-- R1 Normality No → Mann-Whitney (diagonal, skips variance) -->
+    <line x1="546" y1="166" x2="800" y2="234" stroke="#c0341a" stroke-width="1.8" marker-end="url(#ar)"/>
+    <text x="660" y="189" text-anchor="middle" font-size="11" font-weight="700" fill="#c0341a">No</text>
+
+    <!-- ── C4: Variance box (R1 only) ── -->
+    <rect x="594" y="126" width="152" height="52" rx="8" fill="#fef3e8" stroke="#f7c89a" stroke-width="1.5"/>
+    <text x="670" y="145" text-anchor="middle" font-size="10" font-weight="700" fill="#c2510a">Equal variance?</text>
+    <text x="670" y="160" text-anchor="middle" font-size="9" fill="#c2510a">Levene's test</text>
+    <text x="670" y="172" text-anchor="middle" font-size="8.5" fill="#e8924a">p &gt; 0.05 = equal</text>
+
+    <!-- Variance Yes → Student's (slot 0, centre=66) -->
+    <line x1="746" y1="138" x2="800" y2="66" stroke="#1a8a44" stroke-width="1.8" marker-end="url(#ag)"/>
+    <text x="764" y="92" text-anchor="middle" font-size="11" font-weight="700" fill="#1a8a44">Yes</text>
+
+    <!-- Variance No → Welch's (slot 1, centre=152) -->
+    <line x1="746" y1="160" x2="800" y2="152" stroke="#c0341a" stroke-width="1.8" marker-end="url(#ar)"/>
+    <text x="770" y="148" text-anchor="middle" font-size="11" font-weight="700" fill="#c0341a">No</text>
+
+    <!-- ════════════════════════════════════════════
+         R2: Yes → Paired t-test (slot 3, centre=324)
+             No  → Wilcoxon (slot 4, centre=410)
+    ════════════════════════════════════════════ -->
+    <line x1="546" y1="318" x2="800" y2="324" stroke="#1a8a44" stroke-width="1.8" marker-end="url(#ag)"/>
+    <text x="672" y="310" text-anchor="middle" font-size="11" font-weight="700" fill="#1a8a44">Yes</text>
+    <line x1="546" y1="332" x2="800" y2="410" stroke="#c0341a" stroke-width="1.8" marker-end="url(#ar)"/>
+    <text x="672" y="390" text-anchor="middle" font-size="11" font-weight="700" fill="#c0341a">No</text>
+
+    <!-- ════════════════════════════════════════════
+         R3: Yes → ANOVA (slot 5, centre=496)
+             No  → Kruskal-Wallis (slot 6, centre=582)
+    ════════════════════════════════════════════ -->
+    <line x1="546" y1="490" x2="800" y2="496" stroke="#1a8a44" stroke-width="1.8" marker-end="url(#ag)"/>
+    <text x="672" y="482" text-anchor="middle" font-size="11" font-weight="700" fill="#1a8a44">Yes</text>
+    <line x1="546" y1="504" x2="800" y2="582" stroke="#c0341a" stroke-width="1.8" marker-end="url(#ar)"/>
+    <text x="672" y="562" text-anchor="middle" font-size="11" font-weight="700" fill="#c0341a">No</text>
+
+
+
+    <!-- ────────────────── C5: 9 Outcome boxes ────────────────── -->
+    <!-- slot 0 y=38: Student's -->
+    <rect x="800" y="38" width="172" height="56" rx="8" fill="#eaf0fd" stroke="#b3c8f7" stroke-width="2"/>
+    <text x="886" y="61" text-anchor="middle" font-size="12" font-weight="700" fill="#1a52cc">Student's t-test</text>
+    <text x="886" y="77" text-anchor="middle" font-size="8.5" fill="#4a6fd8">parametric · equal variance</text>
+
+    <!-- slot 1 y=124: Welch's -->
+    <rect x="800" y="124" width="172" height="56" rx="8" fill="#eaf0fd" stroke="#b3c8f7" stroke-width="2"/>
+    <text x="886" y="147" text-anchor="middle" font-size="12" font-weight="700" fill="#1a52cc">Welch's t-test</text>
+    <text x="886" y="163" text-anchor="middle" font-size="8.5" fill="#4a6fd8">parametric · unequal variance</text>
+
+    <!-- slot 2 y=210: Mann-Whitney -->
+    <rect x="800" y="210" width="172" height="56" rx="8" fill="#fdeef6" stroke="#f4b3d8" stroke-width="2"/>
+    <text x="886" y="233" text-anchor="middle" font-size="12" font-weight="700" fill="#a31560">Mann-Whitney U</text>
+    <text x="886" y="249" text-anchor="middle" font-size="8.5" fill="#b82070">non-parametric · rank-based</text>
+
+    <!-- slot 3 y=296: Paired t-test -->
+    <rect x="800" y="296" width="172" height="56" rx="8" fill="#eaf0fd" stroke="#b3c8f7" stroke-width="2"/>
+    <text x="886" y="319" text-anchor="middle" font-size="12" font-weight="700" fill="#1a52cc">Paired t-test</text>
+    <text x="886" y="335" text-anchor="middle" font-size="8.5" fill="#4a6fd8">parametric · matched pairs</text>
+
+    <!-- slot 4 y=382: Wilcoxon -->
+    <rect x="800" y="382" width="172" height="56" rx="8" fill="#fdeef6" stroke="#f4b3d8" stroke-width="2"/>
+    <text x="886" y="405" text-anchor="middle" font-size="12" font-weight="700" fill="#a31560">Wilcoxon</text>
+    <text x="886" y="421" text-anchor="middle" font-size="12" font-weight="700" fill="#a31560">Signed-Rank</text>
+
+    <!-- slot 5 y=468: ANOVA -->
+    <rect x="800" y="468" width="172" height="56" rx="8" fill="#eaf7ee" stroke="#9edcb4" stroke-width="2"/>
+    <text x="886" y="491" text-anchor="middle" font-size="12" font-weight="700" fill="#1a7a3e">One-Way ANOVA</text>
+    <text x="886" y="507" text-anchor="middle" font-size="8.5" fill="#1a8a44">parametric · 3+ groups</text>
+
+    <!-- slot 6 y=554: Kruskal-Wallis -->
+    <rect x="800" y="554" width="172" height="56" rx="8" fill="#fdeef6" stroke="#f4b3d8" stroke-width="2"/>
+    <text x="886" y="577" text-anchor="middle" font-size="12" font-weight="700" fill="#a31560">Kruskal-Wallis</text>
+    <text x="886" y="593" text-anchor="middle" font-size="8.5" fill="#b82070">non-parametric · 3+ groups</text>
+
+
+
+    <!-- ────────────────── C6: Post-hoc branch ────────────────── -->
+
+    <!-- ANOVA p<0.05 → Post-Hoc decision node -->
+    <line x1="972" y1="496" x2="1026" y2="496" stroke="#1a8a44" stroke-width="1.8" marker-end="url(#ag)"/>
+    <text x="999" y="487" text-anchor="middle" font-size="10" font-weight="700" fill="#1a8a44">p &lt; 0.05</text>
+
+    <rect x="1026" y="468" width="152" height="56" rx="8" fill="#fef8e7" stroke="#f5d98a" stroke-width="1.5"/>
+    <text x="1102" y="490" text-anchor="middle" font-size="10" font-weight="700" fill="#a05c0a">Post-Hoc</text>
+    <text x="1102" y="505" text-anchor="middle" font-size="8.5" fill="#b07012">Equal variance?</text>
+    <text x="1102" y="517" text-anchor="middle" font-size="8" fill="#c98a18">Levene's test</text>
+
+    <!-- Yes → Tukey's HSD (up) -->
+    <line x1="1102" y1="468" x2="1102" y2="420" stroke="#b07012" stroke-width="1.8" marker-end="url(#ao)"/>
+    <text x="1116" y="447" font-size="11" font-weight="700" fill="#1a8a44">Yes</text>
+    <rect x="1026" y="368" width="152" height="52" rx="8" fill="#fef8e7" stroke="#f5d98a" stroke-width="2"/>
+    <text x="1102" y="390" text-anchor="middle" font-size="11" font-weight="700" fill="#a05c0a">Tukey's HSD</text>
+    <text x="1102" y="406" text-anchor="middle" font-size="8.5" fill="#b07012">equal var / n</text>
+
+    <!-- No → Games-Howell (down) -->
+    <line x1="1102" y1="524" x2="1102" y2="560" stroke="#b07012" stroke-width="1.8" marker-end="url(#ao)"/>
+    <text x="1116" y="545" font-size="11" font-weight="700" fill="#c0341a">No</text>
+    <rect x="1026" y="560" width="152" height="52" rx="8" fill="#fef8e7" stroke="#f5d98a" stroke-width="2"/>
+    <text x="1102" y="582" text-anchor="middle" font-size="11" font-weight="700" fill="#a05c0a">Games-Howell</text>
+    <text x="1102" y="598" text-anchor="middle" font-size="8.5" fill="#b07012">unequal var / n</text>
+
+    <!-- Kruskal-Wallis p<0.05 → Dunn's (diagonal down, clear of Games-Howell) -->
+    <line x1="972" y1="582" x2="1026" y2="676" stroke="#c0341a" stroke-width="1.8" marker-end="url(#ar)"/>
+    <text x="984" y="632" text-anchor="middle" font-size="10" font-weight="700" fill="#c0341a">p &lt; 0.05</text>
+
+    <!-- Dunn's Test box (centre y=676, well below Games-Howell bottom=612) -->
+    <rect x="1026" y="650" width="152" height="52" rx="8" fill="#fdeef6" stroke="#f4b3d8" stroke-width="2"/>
+    <text x="1102" y="672" text-anchor="middle" font-size="11" font-weight="700" fill="#a31560">Dunn's Test</text>
+    <text x="1102" y="688" text-anchor="middle" font-size="8.5" fill="#b82070">non-parametric pairs</text>
+
+    <!-- ── C7: p-value adjustment beside Dunn's ── -->
+    <text x="1311" y="626" text-anchor="middle" font-size="9" font-weight="700" fill="#6b6760" font-family="DM Mono,monospace" letter-spacing="0.04em">p-VALUE ADJUSTMENT</text>
+
+    <!-- Dunn's right → fork up to Bonferroni, down to BH -->
+    <line x1="1178" y1="676" x2="1215" y2="676" stroke="#b07012" stroke-width="1.5" stroke-dasharray="5,3"/>
+    <!-- Fork up → Bonferroni -->
+    <line x1="1215" y1="676" x2="1215" y2="658" stroke="#b07012" stroke-width="1.5" stroke-dasharray="5,3"/>
+    <line x1="1215" y1="658" x2="1230" y2="658" stroke="#b07012" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#ao)"/>
+    <!-- Fork down → BH -->
+    <line x1="1215" y1="676" x2="1215" y2="718" stroke="#b07012" stroke-width="1.5" stroke-dasharray="5,3"/>
+    <line x1="1215" y1="718" x2="1230" y2="718" stroke="#b07012" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#ao)"/>
+
+    <!-- Bonferroni box -->
+    <rect x="1230" y="632" width="162" height="52" rx="8" fill="#fef8e7" stroke="#f5d98a" stroke-width="2"/>
+    <text x="1311" y="654" text-anchor="middle" font-size="11" font-weight="700" fill="#a05c0a">Bonferroni</text>
+    <text x="1311" y="670" text-anchor="middle" font-size="8.5" fill="#b07012">conservative · α/n</text>
+
+    <!-- "or" label between boxes -->
+    <text x="1311" y="712" text-anchor="middle" font-size="9" fill="#8a8680" font-family="DM Mono,monospace">or</text>
+
+    <!-- Benjamini-Hochberg box -->
+    <rect x="1230" y="716" width="162" height="52" rx="8" fill="#fef8e7" stroke="#f5d98a" stroke-width="2"/>
+    <text x="1311" y="736" text-anchor="middle" font-size="11" font-weight="700" fill="#a05c0a">Benjamini-Hochberg</text>
+    <text x="1311" y="752" text-anchor="middle" font-size="8.5" fill="#b07012">FDR control · rank-based</text>
+
+    <rect x="394" y="126" width="152" height="52" rx="8" fill="transparent"
+          onmouseenter="showNormTip(evt)" onmouseleave="hideNormTip()"/>
+    <rect x="394" y="298" width="152" height="52" rx="8" fill="transparent"
+          onmouseenter="showNormTip(evt)" onmouseleave="hideNormTip()"/>
+    <rect x="394" y="470" width="152" height="52" rx="8" fill="transparent"
+          onmouseenter="showNormTip(evt)" onmouseleave="hideNormTip()"/>
+
+    <g id="norm-tooltip" style="display:none;pointer-events:none;">
+      <rect x="0" y="0" width="260" height="225" rx="12" fill="#fdfcff" stroke="#6c3fc4" stroke-width="1.5" filter="url(#shadow)"/>
+      <rect x="0" y="0" width="260" height="40" rx="12" fill="#6c3fc4" fill-opacity="0.07"/>
+      <rect x="0" y="28" width="260" height="12" fill="#6c3fc4" fill-opacity="0.07"/>
+      <text x="130" y="19" text-anchor="middle" font-size="11" font-weight="700" fill="#6c3fc4" font-family="DM Sans,Helvetica,Arial,sans-serif">Distribution Shape</text>
+      <text x="130" y="33" text-anchor="middle" font-size="8.5" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">Shapiro-Wilk test</text>
+      <line x1="16" y1="41" x2="244" y2="41" stroke="#6c3fc4" stroke-width="0.5" opacity="0.3"/>
+      <line x1="130" y1="48" x2="130" y2="154" stroke="#6c3fc4" stroke-width="1" opacity="0.18"/>
+      <line x1="14" y1="148" x2="118" y2="148" stroke="#d6d3ca" stroke-width="1"/>
+      <path d="M16,148 C26,148 46,76 66,76 C86,76 106,148 116,148" fill="#1a52cc" fill-opacity="0.16" stroke="#1a52cc" stroke-width="1.8" stroke-linejoin="round"/>
+      <line x1="66" y1="76" x2="66" y2="148" stroke="#1a52cc" stroke-width="1" stroke-dasharray="3,2" opacity="0.4"/>
+      <text x="66" y="71" text-anchor="middle" font-size="8.5" fill="#1a52cc" font-family="DM Mono,monospace" font-weight="600">μ</text>
+      <text x="66" y="161" text-anchor="middle" font-size="9" font-weight="700" fill="#1a52cc" font-family="DM Sans,Helvetica,Arial,sans-serif">Normal</text>
+      <text x="66" y="173" text-anchor="middle" font-size="7.5" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">p > 0.05  →  parametric</text>
+      <line x1="142" y1="148" x2="246" y2="148" stroke="#d6d3ca" stroke-width="1"/>
+      <path d="M144,148 C146,148 152,82 164,76 C176,70 192,108 210,132 C222,144 234,150 246,148" fill="#a31560" fill-opacity="0.16" stroke="#a31560" stroke-width="1.8" stroke-linejoin="round"/>
+      <line x1="164" y1="76" x2="164" y2="148" stroke="#a31560" stroke-width="1" stroke-dasharray="3,2" opacity="0.4"/>
+      <text x="164" y="71" text-anchor="middle" font-size="8" fill="#a31560" font-family="DM Mono,monospace" opacity="0.75">mode</text>
+      <text x="194" y="161" text-anchor="middle" font-size="9" font-weight="700" fill="#a31560" font-family="DM Sans,Helvetica,Arial,sans-serif">Skewed</text>
+      <text x="194" y="173" text-anchor="middle" font-size="7.5" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">p < 0.05  →  non-parametric</text>
+      <text x="130" y="185" text-anchor="middle" font-size="7.8" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">Run Shapiro-Wilk before choosing your test</text>
+      <rect x="98" y="191" width="64" height="12" rx="6" fill="#6c3fc4" fill-opacity="0.12"/>
+      <text x="130" y="200" text-anchor="middle" font-size="7" font-weight="600" fill="#6c3fc4" font-family="DM Mono,monospace" letter-spacing="0.05em">normality check</text>
+    </g>
+
+    <rect x="594" y="126" width="152" height="52" rx="8" fill="transparent"
+          onmouseenter="showVarTip(evt)" onmouseleave="hideVarTip()"/>
+
+    <g id="var-tooltip" style="display:none;pointer-events:none;">
+      <rect x="0" y="0" width="260" height="225" rx="12" fill="#fffcf8" stroke="#c2510a" stroke-width="1.5" filter="url(#shadow)"/>
+      <rect x="0" y="0" width="260" height="40" rx="12" fill="#c2510a" fill-opacity="0.07"/>
+      <rect x="0" y="28" width="260" height="12" fill="#c2510a" fill-opacity="0.07"/>
+      <text x="130" y="19" text-anchor="middle" font-size="11" font-weight="700" fill="#c2510a" font-family="DM Sans,Helvetica,Arial,sans-serif">Variance Comparison</text>
+      <text x="130" y="33" text-anchor="middle" font-size="8.5" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">Levene's test</text>
+      <line x1="16" y1="41" x2="244" y2="41" stroke="#c2510a" stroke-width="0.5" opacity="0.3"/>
+      <line x1="130" y1="48" x2="130" y2="154" stroke="#c2510a" stroke-width="1" opacity="0.18"/>
+      <line x1="14" y1="148" x2="118" y2="148" stroke="#d6d3ca" stroke-width="1"/>
+      <path d="M14,148 C22,148 38,82 52,78 C66,74 80,148 90,148"
+            fill="#1a52cc" fill-opacity="0.18" stroke="#1a52cc" stroke-width="1.8"/>
+      <path d="M28,148 C36,148 52,86 66,82 C80,78 94,148 116,148"
+            fill="#1a7a3e" fill-opacity="0.14" stroke="#1a7a3e" stroke-width="1.5" stroke-dasharray="4,2"/>
+      <text x="66" y="69" text-anchor="middle" font-size="8" fill="#1a52cc" font-family="DM Mono,monospace" font-weight="600">σ₁ ≈ σ₂</text>
+      <text x="66" y="161" text-anchor="middle" font-size="9" font-weight="700" fill="#1a52cc" font-family="DM Sans,Helvetica,Arial,sans-serif">Equal variance</text>
+      <text x="66" y="173" text-anchor="middle" font-size="7.5" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">p > 0.05  →  Student's t</text>
+      <line x1="142" y1="148" x2="246" y2="148" stroke="#d6d3ca" stroke-width="1"/>
+      <path d="M158,148 C160,148 164,72 172,66 C180,60 184,148 190,148"
+            fill="#1a52cc" fill-opacity="0.18" stroke="#1a52cc" stroke-width="1.8"/>
+      <path d="M142,148 C148,148 158,112 178,102 C198,92 212,138 244,148"
+            fill="#a31560" fill-opacity="0.14" stroke="#a31560" stroke-width="1.5" stroke-dasharray="4,2"/>
+      <text x="194" y="58" text-anchor="middle" font-size="8" fill="#a31560" font-family="DM Mono,monospace" font-weight="600">σ₁ ≠ σ₂</text>
+      <text x="194" y="161" text-anchor="middle" font-size="9" font-weight="700" fill="#a31560" font-family="DM Sans,Helvetica,Arial,sans-serif">Unequal variance</text>
+      <text x="194" y="173" text-anchor="middle" font-size="7.5" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">p < 0.05  →  Welch's t</text>
+      <text x="130" y="185" text-anchor="middle" font-size="7.8" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">Run Levene's after confirming normality</text>
+      <rect x="98" y="191" width="64" height="12" rx="6" fill="#c2510a" fill-opacity="0.12"/>
+      <text x="130" y="200" text-anchor="middle" font-size="7" font-weight="600" fill="#c2510a" font-family="DM Mono,monospace" letter-spacing="0.05em">variance check</text>
+    </g>
+
+    <defs>
+      <filter id="shadow" x="-15%" y="-15%" width="130%" height="140%">
+        <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#1a191720"/>
+      </filter>
+    </defs>
+
+    <rect x="800" y="38" width="172" height="56" rx="8" fill="transparent"
+          onmouseenter="showTip(evt,'tip-students')" onmouseleave="hideTip('tip-students')"/>
+    <g id="tip-students" style="display:none;pointer-events:none;">
+      <rect x="0" y="0" width="260" height="225" rx="12" fill="#f8fbff" stroke="#1a52cc" stroke-width="1.5" filter="url(#shadow)"/>
+      <rect x="0" y="0" width="260" height="40" rx="12" fill="#1a52cc" fill-opacity="0.07"/>
+      <rect x="0" y="28" width="260" height="12" fill="#1a52cc" fill-opacity="0.07"/>
+      <text x="130" y="19" text-anchor="middle" font-size="11" font-weight="700" fill="#1a52cc" font-family="DM Sans,Helvetica,Arial,sans-serif">Student's t-test</text>
+      <text x="130" y="33" text-anchor="middle" font-size="8.5" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">2 groups · equal variance</text>
+      <line x1="16" y1="41" x2="244" y2="41" stroke="#1a52cc" stroke-width="0.5" opacity="0.3"/>
+      
+      <line x1="20" y1="152" x2="240" y2="152" stroke="#d6d3ca" stroke-width="1"/>
+
+      <circle cx="90" cy="68" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="90" cy="74" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="87" cy="80" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="90" cy="86" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="85" cy="92" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="87" cy="98" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="82" cy="104" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="90" cy="110" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="90" cy="116" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="87" cy="122" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="73" y1="98" x2="97" y2="98" stroke="#1a52cc" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="85" y="60" text-anchor="middle" font-size="9" font-weight="700" fill="#1a52cc" font-family="DM Sans,Helvetica,Arial,sans-serif">Group A</text>
+      <circle cx="170" cy="70" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="167" cy="76" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="173" cy="82" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="170" cy="88" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="170" cy="94" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="173" cy="100" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="173" cy="106" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="165" cy="112" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="170" cy="118" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="173" cy="124" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="158" y1="100" x2="182" y2="100" stroke="#1a7a3e" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="170" y="62" text-anchor="middle" font-size="9" font-weight="700" fill="#1a7a3e" font-family="DM Sans,Helvetica,Arial,sans-serif">Group B</text>
+      
+      <text x="130" y="185" text-anchor="middle" font-size="7.8" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">similar spread → compare means directly</text>
+      
+      <rect x="98" y="191" width="64" height="12" rx="6" fill="#1a52cc" fill-opacity="0.12"/>
+      <text x="130" y="200" text-anchor="middle" font-size="7" font-weight="600" fill="#1a52cc" font-family="DM Mono,monospace" letter-spacing="0.05em">parametric</text>
+    </g>
+
+    <rect x="800" y="124" width="172" height="56" rx="8" fill="transparent"
+          onmouseenter="showTip(evt,'tip-welchs')" onmouseleave="hideTip('tip-welchs')"/>
+    <g id="tip-welchs" style="display:none;pointer-events:none;">
+      <rect x="0" y="0" width="260" height="225" rx="12" fill="#f8fbff" stroke="#1a52cc" stroke-width="1.5" filter="url(#shadow)"/>
+      <rect x="0" y="0" width="260" height="40" rx="12" fill="#1a52cc" fill-opacity="0.07"/>
+      <rect x="0" y="28" width="260" height="12" fill="#1a52cc" fill-opacity="0.07"/>
+      <text x="130" y="19" text-anchor="middle" font-size="11" font-weight="700" fill="#1a52cc" font-family="DM Sans,Helvetica,Arial,sans-serif">Welch's t-test</text>
+      <text x="130" y="33" text-anchor="middle" font-size="8.5" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">2 groups · unequal variance</text>
+      <line x1="16" y1="41" x2="244" y2="41" stroke="#1a52cc" stroke-width="0.5" opacity="0.3"/>
+      
+      <line x1="20" y1="152" x2="240" y2="152" stroke="#d6d3ca" stroke-width="1"/>
+
+      <circle cx="90" cy="74" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="87" cy="80" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="90" cy="86" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="85" cy="92" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="87" cy="98" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="82" cy="104" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="90" cy="110" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="90" cy="116" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="87" cy="122" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="82" cy="128" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="73" y1="104" x2="97" y2="104" stroke="#1a52cc" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="85" y="66" text-anchor="middle" font-size="9" font-weight="700" fill="#1a52cc" font-family="DM Sans,Helvetica,Arial,sans-serif">Group A</text>
+      <circle cx="173" cy="58" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="167" cy="72" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="170" cy="90" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="165" cy="108" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="170" cy="122" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="167" cy="134" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="170" cy="140" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="173" cy="144" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="165" cy="146" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="173" cy="148" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="158" y1="134" x2="182" y2="134" stroke="#a31560" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="170" y="50" text-anchor="middle" font-size="9" font-weight="700" fill="#a31560" font-family="DM Sans,Helvetica,Arial,sans-serif">Group B</text>
+      
+      <text x="130" y="185" text-anchor="middle" font-size="7.8" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">corrects degrees of freedom for unequal spread</text>
+      
+      <rect x="98" y="191" width="64" height="12" rx="6" fill="#1a52cc" fill-opacity="0.12"/>
+      <text x="130" y="200" text-anchor="middle" font-size="7" font-weight="600" fill="#1a52cc" font-family="DM Mono,monospace" letter-spacing="0.05em">parametric</text>
+    </g>
+
+    <rect x="800" y="210" width="172" height="56" rx="8" fill="transparent"
+          onmouseenter="showTip(evt,'tip-mannwhitney')" onmouseleave="hideTip('tip-mannwhitney')"/>
+    <g id="tip-mannwhitney" style="display:none;pointer-events:none;">
+      <rect x="0" y="0" width="260" height="225" rx="12" fill="#fff8fb" stroke="#a31560" stroke-width="1.5" filter="url(#shadow)"/>
+      <rect x="0" y="0" width="260" height="40" rx="12" fill="#a31560" fill-opacity="0.07"/>
+      <rect x="0" y="28" width="260" height="12" fill="#a31560" fill-opacity="0.07"/>
+      <text x="130" y="19" text-anchor="middle" font-size="11" font-weight="700" fill="#a31560" font-family="DM Sans,Helvetica,Arial,sans-serif">Mann-Whitney U</text>
+      <text x="130" y="33" text-anchor="middle" font-size="8.5" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">2 groups · non-parametric</text>
+      <line x1="16" y1="41" x2="244" y2="41" stroke="#a31560" stroke-width="0.5" opacity="0.3"/>
+      
+      <line x1="20" y1="152" x2="240" y2="152" stroke="#d6d3ca" stroke-width="1"/>
+
+      <circle cx="90" cy="140" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="86" cy="142" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="82" cy="144" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="82" cy="144" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="91" cy="146" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="91" cy="146" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="87" cy="148" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="87" cy="148" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="87" cy="148" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="87" cy="148" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="91" cy="100" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="79" cy="78" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="88" cy="62" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="73" y1="144" x2="97" y2="144" stroke="#a31560" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="85" y="54" text-anchor="middle" font-size="9" font-weight="700" fill="#a31560" font-family="DM Sans,Helvetica,Arial,sans-serif">Group A</text>
+      <circle cx="164" cy="120" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="169" cy="124" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="165" cy="126" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="168" cy="128" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="167" cy="130" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="173" cy="132" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="172" cy="134" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="168" cy="136" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="174" cy="138" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="173" cy="140" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="170" cy="84" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="169" cy="68" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="158" y1="130" x2="182" y2="130" stroke="#a31560" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="170" y="60" text-anchor="middle" font-size="9" font-weight="700" fill="#a31560" font-family="DM Sans,Helvetica,Arial,sans-serif">Group B</text>
+      
+      <text x="130" y="185" text-anchor="middle" font-size="7.8" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">rank-based — skewed or non-normal data</text>
+      
+      <rect x="98" y="191" width="64" height="12" rx="6" fill="#a31560" fill-opacity="0.12"/>
+      <text x="130" y="200" text-anchor="middle" font-size="7" font-weight="600" fill="#a31560" font-family="DM Mono,monospace" letter-spacing="0.05em">non-parametric</text>
+    </g>
+
+    <rect x="800" y="296" width="172" height="56" rx="8" fill="transparent"
+          onmouseenter="showTip(evt,'tip-paired')" onmouseleave="hideTip('tip-paired')"/>
+    <g id="tip-paired" style="display:none;pointer-events:none;">
+      <rect x="0" y="0" width="260" height="225" rx="12" fill="#f8fbff" stroke="#1a52cc" stroke-width="1.5" filter="url(#shadow)"/>
+      <rect x="0" y="0" width="260" height="40" rx="12" fill="#1a52cc" fill-opacity="0.07"/>
+      <rect x="0" y="28" width="260" height="12" fill="#1a52cc" fill-opacity="0.07"/>
+      <text x="130" y="19" text-anchor="middle" font-size="11" font-weight="700" fill="#1a52cc" font-family="DM Sans,Helvetica,Arial,sans-serif">Paired t-test</text>
+      <text x="130" y="33" text-anchor="middle" font-size="8.5" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">same subjects measured twice</text>
+      <line x1="16" y1="41" x2="244" y2="41" stroke="#1a52cc" stroke-width="0.5" opacity="0.3"/>
+      
+      <line x1="20" y1="152" x2="240" y2="152" stroke="#d6d3ca" stroke-width="1"/>
+
+      <circle cx="82" cy="90" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="85" cy="96" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="82" cy="100" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="90" cy="106" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="90" cy="110" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="87" cy="114" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="90" cy="120" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="90" cy="126" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="90" cy="130" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="82" cy="136" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="73" y1="114" x2="97" y2="114" stroke="#1a52cc" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="85" y="82" text-anchor="middle" font-size="9" font-weight="700" fill="#1a52cc" font-family="DM Sans,Helvetica,Arial,sans-serif">Before</text>
+      <circle cx="170" cy="74" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="170" cy="80" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="170" cy="84" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="170" cy="90" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="170" cy="94" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="173" cy="100" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="165" cy="104" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="173" cy="110" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="173" cy="116" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="170" cy="122" r="3.5" fill="#1a52cc" fill-opacity="0.65" stroke="#1a52cc" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="158" y1="100" x2="182" y2="100" stroke="#1a52cc" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="170" y="66" text-anchor="middle" font-size="9" font-weight="700" fill="#1a52cc" font-family="DM Sans,Helvetica,Arial,sans-serif">After</text>
+      
+      <text x="130" y="185" text-anchor="middle" font-size="7.8" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">tests mean difference between matched pairs</text>
+      
+      <rect x="98" y="191" width="64" height="12" rx="6" fill="#1a52cc" fill-opacity="0.12"/>
+      <text x="130" y="200" text-anchor="middle" font-size="7" font-weight="600" fill="#1a52cc" font-family="DM Mono,monospace" letter-spacing="0.05em">parametric</text>
+    </g>
+
+    <rect x="800" y="382" width="172" height="56" rx="8" fill="transparent"
+          onmouseenter="showTip(evt,'tip-wilcoxon')" onmouseleave="hideTip('tip-wilcoxon')"/>
+    <g id="tip-wilcoxon" style="display:none;pointer-events:none;">
+      <rect x="0" y="0" width="260" height="225" rx="12" fill="#fff8fb" stroke="#a31560" stroke-width="1.5" filter="url(#shadow)"/>
+      <rect x="0" y="0" width="260" height="40" rx="12" fill="#a31560" fill-opacity="0.07"/>
+      <rect x="0" y="28" width="260" height="12" fill="#a31560" fill-opacity="0.07"/>
+      <text x="130" y="19" text-anchor="middle" font-size="11" font-weight="700" fill="#a31560" font-family="DM Sans,Helvetica,Arial,sans-serif">Wilcoxon Signed-Rank</text>
+      <text x="130" y="33" text-anchor="middle" font-size="8.5" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">matched pairs · non-parametric</text>
+      <line x1="16" y1="41" x2="244" y2="41" stroke="#a31560" stroke-width="0.5" opacity="0.3"/>
+      
+      <line x1="20" y1="152" x2="240" y2="152" stroke="#d6d3ca" stroke-width="1"/>
+
+      <circle cx="88" cy="136" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="81" cy="138" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="90" cy="140" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="86" cy="142" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="82" cy="144" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="82" cy="144" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="91" cy="146" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="87" cy="148" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="87" cy="148" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="87" cy="148" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="83" cy="104" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="84" cy="82" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="80" cy="66" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="73" y1="142" x2="97" y2="142" stroke="#a31560" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="85" y="58" text-anchor="middle" font-size="9" font-weight="700" fill="#a31560" font-family="DM Sans,Helvetica,Arial,sans-serif">Before</text>
+      <circle cx="172" cy="116" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="164" cy="120" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="169" cy="124" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="165" cy="126" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="168" cy="128" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="167" cy="130" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="173" cy="132" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="168" cy="136" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="174" cy="138" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="173" cy="140" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="168" cy="90" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="174" cy="72" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="158" y1="128" x2="182" y2="128" stroke="#a31560" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="170" y="64" text-anchor="middle" font-size="9" font-weight="700" fill="#a31560" font-family="DM Sans,Helvetica,Arial,sans-serif">After</text>
+      
+      <text x="130" y="185" text-anchor="middle" font-size="7.8" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">ranks the signed differences between pairs</text>
+      
+      <rect x="98" y="191" width="64" height="12" rx="6" fill="#a31560" fill-opacity="0.12"/>
+      <text x="130" y="200" text-anchor="middle" font-size="7" font-weight="600" fill="#a31560" font-family="DM Mono,monospace" letter-spacing="0.05em">non-parametric</text>
+    </g>
+
+    <rect x="800" y="468" width="172" height="56" rx="8" fill="transparent"
+          onmouseenter="showTip(evt,'tip-anova')" onmouseleave="hideTip('tip-anova')"/>
+    <g id="tip-anova" style="display:none;pointer-events:none;">
+      <rect x="0" y="0" width="260" height="225" rx="12" fill="#f7fdf9" stroke="#1a7a3e" stroke-width="1.5" filter="url(#shadow)"/>
+      <rect x="0" y="0" width="260" height="40" rx="12" fill="#1a7a3e" fill-opacity="0.07"/>
+      <rect x="0" y="28" width="260" height="12" fill="#1a7a3e" fill-opacity="0.07"/>
+      <text x="130" y="19" text-anchor="middle" font-size="11" font-weight="700" fill="#1a7a3e" font-family="DM Sans,Helvetica,Arial,sans-serif">One-Way ANOVA</text>
+      <text x="130" y="33" text-anchor="middle" font-size="8.5" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">3 or more groups · parametric</text>
+      <line x1="16" y1="41" x2="244" y2="41" stroke="#1a7a3e" stroke-width="0.5" opacity="0.3"/>
+      
+      <line x1="20" y1="152" x2="240" y2="152" stroke="#d6d3ca" stroke-width="1"/>
+
+      <circle cx="62" cy="84" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="68" cy="90" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="70" cy="96" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="62" cy="100" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="65" cy="106" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="65" cy="110" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="60" cy="116" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="62" cy="122" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="68" cy="128" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="65" cy="134" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="53" y1="110" x2="77" y2="110" stroke="#1a7a3e" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="65" y="76" text-anchor="middle" font-size="9" font-weight="700" fill="#1a7a3e" font-family="DM Sans,Helvetica,Arial,sans-serif">A</text>
+      <circle cx="135" cy="68" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="135" cy="74" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="132" cy="80" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="135" cy="86" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="135" cy="92" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="127" cy="98" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="132" cy="104" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="132" cy="108" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="127" cy="114" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="130" cy="120" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="118" y1="98" x2="142" y2="98" stroke="#1a7a3e" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="130" y="60" text-anchor="middle" font-size="9" font-weight="700" fill="#1a7a3e" font-family="DM Sans,Helvetica,Arial,sans-serif">B</text>
+      <circle cx="203" cy="54" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="203" cy="58" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="195" cy="64" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="195" cy="70" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="198" cy="76" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="203" cy="82" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="203" cy="86" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="198" cy="92" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="201" cy="98" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="198" cy="104" r="3.5" fill="#1a7a3e" fill-opacity="0.65" stroke="#1a7a3e" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="188" y1="82" x2="212" y2="82" stroke="#1a7a3e" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="200" y="46" text-anchor="middle" font-size="9" font-weight="700" fill="#1a7a3e" font-family="DM Sans,Helvetica,Arial,sans-serif">C</text>
+      
+      <text x="130" y="185" text-anchor="middle" font-size="7.8" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">tests if any group mean differs significantly</text>
+      
+      <rect x="98" y="191" width="64" height="12" rx="6" fill="#1a7a3e" fill-opacity="0.12"/>
+      <text x="130" y="200" text-anchor="middle" font-size="7" font-weight="600" fill="#1a7a3e" font-family="DM Mono,monospace" letter-spacing="0.05em">parametric</text>
+    </g>
+
+    <rect x="800" y="554" width="172" height="56" rx="8" fill="transparent"
+          onmouseenter="showTip(evt,'tip-kruskal')" onmouseleave="hideTip('tip-kruskal')"/>
+    <g id="tip-kruskal" style="display:none;pointer-events:none;">
+      <rect x="0" y="0" width="260" height="225" rx="12" fill="#fff8fb" stroke="#a31560" stroke-width="1.5" filter="url(#shadow)"/>
+      <rect x="0" y="0" width="260" height="40" rx="12" fill="#a31560" fill-opacity="0.07"/>
+      <rect x="0" y="28" width="260" height="12" fill="#a31560" fill-opacity="0.07"/>
+      <text x="130" y="19" text-anchor="middle" font-size="11" font-weight="700" fill="#a31560" font-family="DM Sans,Helvetica,Arial,sans-serif">Kruskal-Wallis</text>
+      <text x="130" y="33" text-anchor="middle" font-size="8.5" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">3 or more groups · non-parametric</text>
+      <line x1="16" y1="41" x2="244" y2="41" stroke="#a31560" stroke-width="0.5" opacity="0.3"/>
+      
+      <line x1="20" y1="152" x2="240" y2="152" stroke="#d6d3ca" stroke-width="1"/>
+
+      <circle cx="67" cy="134" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="59" cy="138" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="65" cy="140" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="61" cy="142" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="70" cy="144" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="66" cy="146" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="62" cy="148" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="62" cy="148" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="62" cy="148" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="62" cy="148" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="67" cy="106" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="68" cy="84" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="68" cy="66" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="53" y1="142" x2="77" y2="142" stroke="#a31560" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="65" y="58" text-anchor="middle" font-size="9" font-weight="700" fill="#a31560" font-family="DM Sans,Helvetica,Arial,sans-serif">A</text>
+      <circle cx="126" cy="110" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="134" cy="116" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="126" cy="120" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="131" cy="124" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="133" cy="128" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="129" cy="130" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="134" cy="134" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="130" cy="136" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="133" cy="138" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="129" cy="140" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="134" cy="88" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="136" cy="72" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="118" y1="128" x2="142" y2="128" stroke="#a31560" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="130" y="64" text-anchor="middle" font-size="9" font-weight="700" fill="#a31560" font-family="DM Sans,Helvetica,Arial,sans-serif">B</text>
+      <circle cx="195" cy="84" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="196" cy="90" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="204" cy="96" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="196" cy="100" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="194" cy="106" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="199" cy="110" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="200" cy="116" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="199" cy="120" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="200" cy="126" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="205" cy="130" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="195" cy="66" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="195" cy="56" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="188" y1="106" x2="212" y2="106" stroke="#a31560" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="200" y="48" text-anchor="middle" font-size="9" font-weight="700" fill="#a31560" font-family="DM Sans,Helvetica,Arial,sans-serif">C</text>
+      
+      <text x="130" y="185" text-anchor="middle" font-size="7.8" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">rank-based alternative to one-way ANOVA</text>
+      
+      <rect x="98" y="191" width="64" height="12" rx="6" fill="#a31560" fill-opacity="0.12"/>
+      <text x="130" y="200" text-anchor="middle" font-size="7" font-weight="600" fill="#a31560" font-family="DM Mono,monospace" letter-spacing="0.05em">non-parametric</text>
+    </g>
+
+    <rect x="1026" y="468" width="152" height="56" rx="8" fill="transparent"
+          onmouseenter="showTip(evt,'tip-posthoc-node')" onmouseleave="hideTip('tip-posthoc-node')"/>
+    <g id="tip-posthoc-node" style="display:none;pointer-events:none;">
+      <rect x="0" y="0" width="260" height="225" rx="12" fill="#fffdf5" stroke="#a05c0a" stroke-width="1.5" filter="url(#shadow)"/>
+      <rect x="0" y="0" width="260" height="40" rx="12" fill="#a05c0a" fill-opacity="0.07"/>
+      <rect x="0" y="28" width="260" height="12" fill="#a05c0a" fill-opacity="0.07"/>
+      <text x="130" y="19" text-anchor="middle" font-size="11" font-weight="700" fill="#a05c0a" font-family="DM Sans,Helvetica,Arial,sans-serif">Post-Hoc Analysis</text>
+      <text x="130" y="33" text-anchor="middle" font-size="8.5" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">run after significant ANOVA</text>
+      <line x1="16" y1="41" x2="244" y2="41" stroke="#a05c0a" stroke-width="0.5" opacity="0.3"/>
+      <line x1="130" y1="48" x2="130" y2="154" stroke="#a05c0a" stroke-width="1" opacity="0.18"/>
+      <line x1="14" y1="148" x2="118" y2="148" stroke="#d6d3ca" stroke-width="1"/>
+      <path d="M14,148 C22,148 38,82 52,78 C66,74 80,148 90,148"
+            fill="#1a52cc" fill-opacity="0.18" stroke="#1a52cc" stroke-width="1.8"/>
+      <path d="M28,148 C36,148 52,86 66,82 C80,78 94,148 116,148"
+            fill="#1a7a3e" fill-opacity="0.14" stroke="#1a7a3e" stroke-width="1.5" stroke-dasharray="4,2"/>
+      <text x="66" y="69" text-anchor="middle" font-size="8" fill="#1a52cc" font-family="DM Mono,monospace" font-weight="600">σ₁ ≈ σ₂</text>
+      <text x="66" y="161" text-anchor="middle" font-size="9" font-weight="700" fill="#1a52cc" font-family="DM Sans,Helvetica,Arial,sans-serif">Equal variance</text>
+      <text x="66" y="173" text-anchor="middle" font-size="7.5" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">p > 0.05  →  Student's t</text>
+      <line x1="142" y1="148" x2="246" y2="148" stroke="#d6d3ca" stroke-width="1"/>
+      <path d="M158,148 C160,148 164,72 172,66 C180,60 184,148 190,148"
+            fill="#1a52cc" fill-opacity="0.18" stroke="#1a52cc" stroke-width="1.8"/>
+      <path d="M142,148 C148,148 158,112 178,102 C198,92 212,138 244,148"
+            fill="#a31560" fill-opacity="0.14" stroke="#a31560" stroke-width="1.5" stroke-dasharray="4,2"/>
+      <text x="194" y="58" text-anchor="middle" font-size="8" fill="#a31560" font-family="DM Mono,monospace" font-weight="600">σ₁ ≠ σ₂</text>
+      <text x="194" y="161" text-anchor="middle" font-size="9" font-weight="700" fill="#a31560" font-family="DM Sans,Helvetica,Arial,sans-serif">Unequal variance</text>
+      <text x="194" y="173" text-anchor="middle" font-size="7.5" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">p < 0.05  →  Welch's t</text>
+      <text x="130" y="185" text-anchor="middle" font-size="7.8" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">equal variance → Tukey's · unequal → Games-Howell</text>
+      <rect x="98" y="191" width="64" height="12" rx="6" fill="#a05c0a" fill-opacity="0.12"/>
+      <text x="130" y="200" text-anchor="middle" font-size="7" font-weight="600" fill="#a05c0a" font-family="DM Mono,monospace" letter-spacing="0.05em">post-hoc</text>
+    </g>
+
+    <rect x="1026" y="368" width="152" height="52" rx="8" fill="transparent"
+          onmouseenter="showTip(evt,'tip-tukey')" onmouseleave="hideTip('tip-tukey')"/>
+    <g id="tip-tukey" style="display:none;pointer-events:none;">
+      <rect x="0" y="0" width="260" height="225" rx="12" fill="#fffdf5" stroke="#a05c0a" stroke-width="1.5" filter="url(#shadow)"/>
+      <rect x="0" y="0" width="260" height="40" rx="12" fill="#a05c0a" fill-opacity="0.07"/>
+      <rect x="0" y="28" width="260" height="12" fill="#a05c0a" fill-opacity="0.07"/>
+      <text x="130" y="19" text-anchor="middle" font-size="11" font-weight="700" fill="#a05c0a" font-family="DM Sans,Helvetica,Arial,sans-serif">Tukey's HSD</text>
+      <text x="130" y="33" text-anchor="middle" font-size="8.5" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">equal variance · all pairs</text>
+      <line x1="16" y1="41" x2="244" y2="41" stroke="#a05c0a" stroke-width="0.5" opacity="0.3"/>
+      
+      <line x1="20" y1="152" x2="240" y2="152" stroke="#d6d3ca" stroke-width="1"/>
+
+      <circle cx="62" cy="84" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="68" cy="90" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="70" cy="96" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="65" cy="102" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="65" cy="106" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="62" cy="112" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="62" cy="118" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="62" cy="122" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="68" cy="128" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="65" cy="134" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="53" y1="112" x2="77" y2="112" stroke="#a05c0a" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="65" y="76" text-anchor="middle" font-size="9" font-weight="700" fill="#a05c0a" font-family="DM Sans,Helvetica,Arial,sans-serif">A</text>
+      <circle cx="135" cy="68" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="135" cy="74" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="132" cy="80" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="135" cy="86" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="135" cy="92" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="135" cy="96" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="135" cy="102" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="132" cy="108" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="127" cy="114" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="130" cy="120" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="118" y1="96" x2="142" y2="96" stroke="#a05c0a" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="130" y="60" text-anchor="middle" font-size="9" font-weight="700" fill="#a05c0a" font-family="DM Sans,Helvetica,Arial,sans-serif">B</text>
+      <circle cx="198" cy="52" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="203" cy="58" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="195" cy="64" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="195" cy="70" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="198" cy="76" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="203" cy="82" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="203" cy="86" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="198" cy="92" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="201" cy="98" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="198" cy="104" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="188" y1="82" x2="212" y2="82" stroke="#a05c0a" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="200" y="44" text-anchor="middle" font-size="9" font-weight="700" fill="#a05c0a" font-family="DM Sans,Helvetica,Arial,sans-serif">C</text>
+      <line x1="65" y1="62" x2="65" y2="58" stroke="#a05c0a" stroke-width="1" opacity="0.55"/>
+      <line x1="65" y1="58" x2="130" y2="58" stroke="#a05c0a" stroke-width="1" opacity="0.55"/>
+      <line x1="130" y1="58" x2="130" y2="62" stroke="#a05c0a" stroke-width="1" opacity="0.55"/>
+      <text x="97" y="55" text-anchor="middle" font-size="9" fill="#a05c0a" opacity="0.75">✱</text>
+      <line x1="130" y1="52" x2="130" y2="48" stroke="#a05c0a" stroke-width="1" opacity="0.55"/>
+      <line x1="130" y1="48" x2="200" y2="48" stroke="#a05c0a" stroke-width="1" opacity="0.55"/>
+      <line x1="200" y1="48" x2="200" y2="52" stroke="#a05c0a" stroke-width="1" opacity="0.55"/>
+      <text x="165" y="45" text-anchor="middle" font-size="9" fill="#a05c0a" opacity="0.75">✱</text>
+      <line x1="65" y1="44" x2="65" y2="40" stroke="#a05c0a" stroke-width="1" opacity="0.55"/>
+      <line x1="65" y1="40" x2="200" y2="40" stroke="#a05c0a" stroke-width="1" opacity="0.55"/>
+      <line x1="200" y1="40" x2="200" y2="44" stroke="#a05c0a" stroke-width="1" opacity="0.55"/>
+      <text x="132" y="37" text-anchor="middle" font-size="9" fill="#a05c0a" opacity="0.75">✱✱</text>
+      
+      <text x="130" y="185" text-anchor="middle" font-size="7.8" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">controls family-wise error rate</text>
+      
+      <rect x="98" y="191" width="64" height="12" rx="6" fill="#a05c0a" fill-opacity="0.12"/>
+      <text x="130" y="200" text-anchor="middle" font-size="7" font-weight="600" fill="#a05c0a" font-family="DM Mono,monospace" letter-spacing="0.05em">post-hoc</text>
+    </g>
+
+    <rect x="1026" y="560" width="152" height="52" rx="8" fill="transparent"
+          onmouseenter="showTip(evt,'tip-gameshowell')" onmouseleave="hideTip('tip-gameshowell')"/>
+    <g id="tip-gameshowell" style="display:none;pointer-events:none;">
+      <rect x="0" y="0" width="260" height="225" rx="12" fill="#fffdf5" stroke="#a05c0a" stroke-width="1.5" filter="url(#shadow)"/>
+      <rect x="0" y="0" width="260" height="40" rx="12" fill="#a05c0a" fill-opacity="0.07"/>
+      <rect x="0" y="28" width="260" height="12" fill="#a05c0a" fill-opacity="0.07"/>
+      <text x="130" y="19" text-anchor="middle" font-size="11" font-weight="700" fill="#a05c0a" font-family="DM Sans,Helvetica,Arial,sans-serif">Games-Howell</text>
+      <text x="130" y="33" text-anchor="middle" font-size="8.5" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">unequal variance · all pairs</text>
+      <line x1="16" y1="41" x2="244" y2="41" stroke="#a05c0a" stroke-width="0.5" opacity="0.3"/>
+      
+      <line x1="20" y1="152" x2="240" y2="152" stroke="#d6d3ca" stroke-width="1"/>
+
+      <circle cx="70" cy="92" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="70" cy="96" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="62" cy="100" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="62" cy="104" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="62" cy="108" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="65" cy="110" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="62" cy="114" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="62" cy="118" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="62" cy="122" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="65" cy="126" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="53" y1="110" x2="77" y2="110" stroke="#a05c0a" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="65" y="84" text-anchor="middle" font-size="9" font-weight="700" fill="#a05c0a" font-family="DM Sans,Helvetica,Arial,sans-serif">A</text>
+      <circle cx="129" cy="58" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="127" cy="70" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="132" cy="84" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="135" cy="96" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="132" cy="108" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="130" cy="120" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="135" cy="130" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="127" cy="138" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="130" cy="144" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="130" cy="148" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="118" y1="120" x2="142" y2="120" stroke="#a05c0a" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="130" y="50" text-anchor="middle" font-size="9" font-weight="700" fill="#a05c0a" font-family="DM Sans,Helvetica,Arial,sans-serif">B</text>
+      <circle cx="198" cy="72" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="195" cy="78" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="195" cy="84" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="198" cy="90" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="198" cy="96" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="201" cy="102" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="195" cy="108" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="198" cy="114" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="198" cy="120" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <circle cx="201" cy="126" r="3.5" fill="#a05c0a" fill-opacity="0.65" stroke="#a05c0a" stroke-width="0.5" stroke-opacity="0.4"/>
+      <line x1="188" y1="102" x2="212" y2="102" stroke="#a05c0a" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="200" y="64" text-anchor="middle" font-size="9" font-weight="700" fill="#a05c0a" font-family="DM Sans,Helvetica,Arial,sans-serif">C</text>
+      <line x1="65" y1="62" x2="65" y2="58" stroke="#a05c0a" stroke-width="1" opacity="0.55"/>
+      <line x1="65" y1="58" x2="130" y2="58" stroke="#a05c0a" stroke-width="1" opacity="0.55"/>
+      <line x1="130" y1="58" x2="130" y2="62" stroke="#a05c0a" stroke-width="1" opacity="0.55"/>
+      <text x="97" y="55" text-anchor="middle" font-size="9" fill="#a05c0a" opacity="0.75">✱</text>
+      <line x1="130" y1="52" x2="130" y2="48" stroke="#a05c0a" stroke-width="1" opacity="0.55"/>
+      <line x1="130" y1="48" x2="200" y2="48" stroke="#a05c0a" stroke-width="1" opacity="0.55"/>
+      <line x1="200" y1="48" x2="200" y2="52" stroke="#a05c0a" stroke-width="1" opacity="0.55"/>
+      <text x="165" y="45" text-anchor="middle" font-size="9" fill="#a05c0a" opacity="0.75">✱</text>
+      
+      <text x="130" y="185" text-anchor="middle" font-size="7.8" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">Welch-Satterthwaite df per pair</text>
+      
+      <rect x="98" y="191" width="64" height="12" rx="6" fill="#a05c0a" fill-opacity="0.12"/>
+      <text x="130" y="200" text-anchor="middle" font-size="7" font-weight="600" fill="#a05c0a" font-family="DM Mono,monospace" letter-spacing="0.05em">post-hoc</text>
+    </g>
+
+    <rect x="1026" y="650" width="152" height="52" rx="8" fill="transparent"
+          onmouseenter="showTip(evt,'tip-dunns')" onmouseleave="hideTip('tip-dunns')"/>
+    <g id="tip-dunns" style="display:none;pointer-events:none;">
+      <rect x="0" y="0" width="260" height="225" rx="12" fill="#fff8fb" stroke="#a31560" stroke-width="1.5" filter="url(#shadow)"/>
+      <rect x="0" y="0" width="260" height="40" rx="12" fill="#a31560" fill-opacity="0.07"/>
+      <rect x="0" y="28" width="260" height="12" fill="#a31560" fill-opacity="0.07"/>
+      <text x="130" y="19" text-anchor="middle" font-size="11" font-weight="700" fill="#a31560" font-family="DM Sans,Helvetica,Arial,sans-serif">Dunn's Test</text>
+      <text x="130" y="33" text-anchor="middle" font-size="8.5" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">post-hoc for Kruskal-Wallis</text>
+      <line x1="16" y1="41" x2="244" y2="41" stroke="#a31560" stroke-width="0.5" opacity="0.3"/>
+      
+      <line x1="20" y1="148" x2="240" y2="148" stroke="#d6d3ca" stroke-width="1"/>
+
+      <line x1="20" y1="148" x2="240" y2="148" stroke="#d6d3ca" stroke-width="1"/>
+      <circle cx="67" cy="134" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="59" cy="138" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="65" cy="140" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="61" cy="142" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="70" cy="144" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="66" cy="146" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="62" cy="148" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="62" cy="148" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="62" cy="148" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="67" cy="106" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="68" cy="84" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="68" cy="66" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <line x1="53" y1="142" x2="77" y2="142" stroke="#a31560" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="65" y="58" text-anchor="middle" font-size="9" font-weight="700" fill="#a31560" font-family="DM Sans,Helvetica,Arial,sans-serif">A</text>
+      <circle cx="126" cy="110" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="134" cy="116" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="126" cy="120" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="131" cy="124" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="133" cy="128" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="129" cy="130" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="134" cy="134" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="130" cy="136" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="133" cy="138" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="129" cy="140" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="134" cy="88" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="136" cy="72" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <line x1="118" y1="128" x2="142" y2="128" stroke="#a31560" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="130" y="64" text-anchor="middle" font-size="9" font-weight="700" fill="#a31560" font-family="DM Sans,Helvetica,Arial,sans-serif">B</text>
+      <circle cx="195" cy="84" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="196" cy="90" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="204" cy="96" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="196" cy="100" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="194" cy="106" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="199" cy="110" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="200" cy="116" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="199" cy="120" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="200" cy="126" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="205" cy="130" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="195" cy="66" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <circle cx="195" cy="56" r="3.5" fill="#a31560" fill-opacity="0.65" stroke="#a31560" stroke-width="0.5"/>
+      <line x1="188" y1="106" x2="212" y2="106" stroke="#a31560" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="200" y="48" text-anchor="middle" font-size="9" font-weight="700" fill="#a31560" font-family="DM Sans,Helvetica,Arial,sans-serif">C</text>
+      <line x1="65" y1="62" x2="65" y2="58" stroke="#a31560" stroke-width="1" opacity="0.55"/>
+      <line x1="65" y1="58" x2="130" y2="58" stroke="#a31560" stroke-width="1" opacity="0.55"/>
+      <line x1="130" y1="58" x2="130" y2="62" stroke="#a31560" stroke-width="1" opacity="0.55"/>
+      <text x="97" y="55" text-anchor="middle" font-size="9" fill="#a31560" opacity="0.75">✱</text>
+      <line x1="130" y1="52" x2="130" y2="48" stroke="#a31560" stroke-width="1" opacity="0.55"/>
+      <line x1="130" y1="48" x2="200" y2="48" stroke="#a31560" stroke-width="1" opacity="0.55"/>
+      <line x1="200" y1="48" x2="200" y2="52" stroke="#a31560" stroke-width="1" opacity="0.55"/>
+      <text x="165" y="45" text-anchor="middle" font-size="9" fill="#a31560" opacity="0.75">✱</text>
+      <line x1="65" y1="44" x2="65" y2="40" stroke="#a31560" stroke-width="1" opacity="0.55"/>
+      <line x1="65" y1="40" x2="200" y2="40" stroke="#a31560" stroke-width="1" opacity="0.55"/>
+      <line x1="200" y1="40" x2="200" y2="44" stroke="#a31560" stroke-width="1" opacity="0.55"/>
+      <text x="132" y="37" text-anchor="middle" font-size="9" fill="#a31560" opacity="0.75">✱✱</text>
+      <text x="130" y="185" text-anchor="middle" font-size="7.8" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">pairwise rank-based comparisons</text>
+      <rect x="98" y="191" width="64" height="12" rx="6" fill="#a31560" fill-opacity="0.12"/>
+      <text x="130" y="200" text-anchor="middle" font-size="7" font-weight="600" fill="#a31560" font-family="DM Mono,monospace" letter-spacing="0.05em">non-parametric</text>
+    </g>
+    <rect x="1230" y="632" width="162" height="52" rx="8" fill="transparent"
+          onmouseenter="showTip(evt,'tip-bonferroni')" onmouseleave="hideTip('tip-bonferroni')"/>
+    <g id="tip-bonferroni" style="display:none;pointer-events:none;">
+      <rect x="0" y="0" width="260" height="225" rx="12" fill="#fffdf5" stroke="#a05c0a" stroke-width="1.5" filter="url(#shadow)"/>
+      <rect x="0" y="0" width="260" height="40" rx="12" fill="#a05c0a" fill-opacity="0.07"/>
+      <rect x="0" y="28" width="260" height="12" fill="#a05c0a" fill-opacity="0.07"/>
+      <text x="130" y="19" text-anchor="middle" font-size="11" font-weight="700" fill="#a05c0a" font-family="DM Sans,Helvetica,Arial,sans-serif">Bonferroni Correction</text>
+      <text x="130" y="33" text-anchor="middle" font-size="8.5" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">family-wise error control</text>
+      <line x1="16" y1="41" x2="244" y2="41" stroke="#a05c0a" stroke-width="0.5" opacity="0.3"/>
+      <line x1="130" y1="48" x2="130" y2="154" stroke="#a05c0a" stroke-width="1" opacity="0.18"/>
+      <line x1="14" y1="148" x2="118" y2="148" stroke="#d6d3ca" stroke-width="1"/>
+      <line x1="142" y1="148" x2="246" y2="148" stroke="#d6d3ca" stroke-width="1"/>
+      <!-- Left: raw p-values as dots at varying heights -->
+      <circle cx="35" cy="80" r="4" fill="#a05c0a" fill-opacity="0.7"/>
+      <circle cx="52" cy="110" r="4" fill="#a05c0a" fill-opacity="0.7"/>
+      <circle cx="68" cy="60" r="4" fill="#a05c0a" fill-opacity="0.7"/>
+      <circle cx="84" cy="130" r="4" fill="#a05c0a" fill-opacity="0.7"/>
+      <circle cx="100" cy="95" r="4" fill="#a05c0a" fill-opacity="0.7"/>
+      <!-- threshold line at α=0.05 (y≈110 in this scale) -->
+      <line x1="18" y1="110" x2="115" y2="110" stroke="#a05c0a" stroke-width="1.2" stroke-dasharray="4,2" opacity="0.6"/>
+      <text x="118" y="113" font-size="7" fill="#a05c0a" font-family="DM Mono,monospace">α</text>
+      <text x="66" y="161" text-anchor="middle" font-size="9" font-weight="700" fill="#a05c0a" font-family="DM Sans,Helvetica,Arial,sans-serif">Raw p-values</text>
+      <text x="66" y="173" text-anchor="middle" font-size="7.5" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">some below α</text>
+      <!-- Right: adjusted (all higher — harder to pass) -->
+      <circle cx="163" cy="115" r="4" fill="#a05c0a" fill-opacity="0.7"/>
+      <circle cx="180" cy="142" r="4" fill="#d6d3ca" fill-opacity="0.9"/>
+      <circle cx="196" cy="95" r="4" fill="#a05c0a" fill-opacity="0.7"/>
+      <circle cx="212" cy="145" r="4" fill="#d6d3ca" fill-opacity="0.9"/>
+      <circle cx="228" cy="130" r="4" fill="#a05c0a" fill-opacity="0.7"/>
+      <line x1="146" y1="110" x2="243" y2="110" stroke="#a05c0a" stroke-width="1.2" stroke-dasharray="4,2" opacity="0.6"/>
+      <text x="246" y="113" font-size="7" fill="#a05c0a" font-family="DM Mono,monospace">α</text>
+      <text x="194" y="161" text-anchor="middle" font-size="9" font-weight="700" fill="#a05c0a" font-family="DM Sans,Helvetica,Arial,sans-serif">Adjusted (α/n)</text>
+      <text x="194" y="173" text-anchor="middle" font-size="7.5" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">fewer pass — conservative</text>
+      <text x="130" y="185" text-anchor="middle" font-size="7.8" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">multiply each p by number of comparisons</text>
+      <rect x="98" y="191" width="64" height="12" rx="6" fill="#a05c0a" fill-opacity="0.12"/>
+      <text x="130" y="200" text-anchor="middle" font-size="7" font-weight="600" fill="#a05c0a" font-family="DM Mono,monospace" letter-spacing="0.05em">bonferroni</text>
+    </g>
+    <rect x="1230" y="716" width="162" height="52" rx="8" fill="transparent"
+          onmouseenter="showTip(evt,'tip-bh')" onmouseleave="hideTip('tip-bh')"/>
+    <g id="tip-bh" style="display:none;pointer-events:none;">
+      <rect x="0" y="0" width="260" height="225" rx="12" fill="#fffdf5" stroke="#a05c0a" stroke-width="1.5" filter="url(#shadow)"/>
+      <rect x="0" y="0" width="260" height="40" rx="12" fill="#a05c0a" fill-opacity="0.07"/>
+      <rect x="0" y="28" width="260" height="12" fill="#a05c0a" fill-opacity="0.07"/>
+      <text x="130" y="19" text-anchor="middle" font-size="11" font-weight="700" fill="#a05c0a" font-family="DM Sans,Helvetica,Arial,sans-serif">Benjamini-Hochberg</text>
+      <text x="130" y="33" text-anchor="middle" font-size="8.5" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">false discovery rate (FDR) control</text>
+      <line x1="16" y1="41" x2="244" y2="41" stroke="#a05c0a" stroke-width="0.5" opacity="0.3"/>
+      <line x1="130" y1="48" x2="130" y2="154" stroke="#a05c0a" stroke-width="1" opacity="0.18"/>
+      <line x1="14" y1="148" x2="118" y2="148" stroke="#d6d3ca" stroke-width="1"/>
+      <line x1="142" y1="148" x2="246" y2="148" stroke="#d6d3ca" stroke-width="1"/>
+      <!-- Left: p-values ranked smallest to largest as a rising staircase -->
+      <circle cx="28" cy="138" r="3.5" fill="#a05c0a" fill-opacity="0.75"/>
+      <circle cx="44" cy="128" r="3.5" fill="#a05c0a" fill-opacity="0.75"/>
+      <circle cx="60" cy="112" r="3.5" fill="#a05c0a" fill-opacity="0.75"/>
+      <circle cx="76" cy="96" r="3.5" fill="#a05c0a" fill-opacity="0.75"/>
+      <circle cx="92" cy="78" r="3.5" fill="#a05c0a" fill-opacity="0.75"/>
+      <circle cx="108" cy="62" r="3.5" fill="#d6d3ca" fill-opacity="0.9"/>
+      <!-- diagonal threshold line (BH threshold grows with rank) -->
+      <line x1="18" y1="148" x2="115" y2="60" stroke="#a05c0a" stroke-width="1.2" stroke-dasharray="4,2" opacity="0.6"/>
+      <text x="30" y="60" font-size="7" fill="#a05c0a" font-family="DM Mono,monospace">rank · q/m</text>
+      <text x="66" y="161" text-anchor="middle" font-size="9" font-weight="700" fill="#a05c0a" font-family="DM Sans,Helvetica,Arial,sans-serif">Ranked p-values</text>
+      <text x="66" y="173" text-anchor="middle" font-size="7.5" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">vs growing threshold</text>
+      <!-- Right: more pass than Bonferroni (only 1 greyed out) -->
+      <circle cx="163" cy="130" r="3.5" fill="#a05c0a" fill-opacity="0.75"/>
+      <circle cx="180" cy="118" r="3.5" fill="#a05c0a" fill-opacity="0.75"/>
+      <circle cx="196" cy="100" r="3.5" fill="#a05c0a" fill-opacity="0.75"/>
+      <circle cx="212" cy="86" r="3.5" fill="#a05c0a" fill-opacity="0.75"/>
+      <circle cx="228" cy="70" r="3.5" fill="#a05c0a" fill-opacity="0.75"/>
+      <circle cx="244" cy="60" r="3.5" fill="#d6d3ca" fill-opacity="0.9"/>
+      <line x1="146" y1="148" x2="246" y2="55" stroke="#a05c0a" stroke-width="1.2" stroke-dasharray="4,2" opacity="0.6"/>
+      <text x="194" y="161" text-anchor="middle" font-size="9" font-weight="700" fill="#a05c0a" font-family="DM Sans,Helvetica,Arial,sans-serif">More power</text>
+      <text x="194" y="173" text-anchor="middle" font-size="7.5" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">less conservative than Bonf.</text>
+      <text x="130" y="185" text-anchor="middle" font-size="7.8" fill="#8a8680" font-family="DM Sans,Helvetica,Arial,sans-serif">controls expected proportion of false positives</text>
+      <rect x="98" y="191" width="64" height="12" rx="6" fill="#a05c0a" fill-opacity="0.12"/>
+      <text x="130" y="200" text-anchor="middle" font-size="7" font-weight="600" fill="#a05c0a" font-family="DM Mono,monospace" letter-spacing="0.05em">FDR control</text>
+    </g>
+  </svg>
+</div>
+
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#6c3fc4"></div>Normality</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#c2510a"></div>Variance</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#1a52cc"></div>Parametric</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#a31560"></div>Non-Parametric</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#1a7a3e"></div>ANOVA</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#a05c0a"></div>Post-Hoc</div>
+</div>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>Test</th>
+      <th>Equation</th>
+      <th>Python Code (Google Colab)</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <!-- ── SECTION: NORMALITY TESTS ── -->
+    <tr class="section-row">
+      <td colspan="3">
+        <div class="section-label" style="color:#6d28d9">
+          Assumption Check — Normality
+          <div class="section-line" style="background:rgba(109,40,217,0.2)"></div>
+        </div>
+      </td>
+    </tr>
+
+    <!-- Shapiro-Wilk -->
+    <tr class="data-row row-normal">
+      <td>
+        <div class="test-type-pill pill-normal">normality</div>
+        <div class="test-name">Shapiro-Wilk</div>
+        <div class="test-note">Best for small samples (n &lt; 50). Most powerful normality test.</div>
+      </td>
+      <td>
+        <div class="eq-cell">
+          <div class="eq-main">
+            <div class="eq-row">W =
+              <span class="eq-frac">
+                <span class="eq-num">(Σ aᵢxᵢ)²</span>
+                <span class="eq-den">Σ (xᵢ − x̄)²</span>
+              </span>
+            </div>
+          </div>
+          <div class="eq-vars">
+            <span>aᵢ</span> = order statistic coefficients<br>
+            <span>xᵢ</span> = ordered sample values<br>
+            p &lt; 0.05 → reject normality
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+          <pre><span class="k">from</span> <span class="m">scipy.stats</span> <span class="k">import</span> shapiro
+<span class="k">import</span> <span class="m">statsmodels.api</span> <span class="k">as</span> sm
+
+<span class="p">print</span>(<span class="s">"Shapiro-Wilk Test for Normality (mNeonGreen/mCherry Ratio per Sample Type):\n"</span>)
+
+alpha = <span class="n">0.05</span> <span class="c"># Significance level</span>
+
+<span class="k">for</span> sample_name <span class="k">in</span> df_filtered[<span class="s">'Sample_Name'</span>].unique():
+    sample_data = df_filtered[df_filtered[<span class="s">'Sample_Name'</span>] == sample_name][<span class="s">'Ratio'</span>]
+    stat, p = <span class="f">shapiro</span>(sample_data)
+    <span class="p">print</span>(<span class="s">f"Sample: {sample_name}"</span>)
+    <span class="p">print</span>(<span class="s">f"  Statistics=%.3f, p=%.3f"</span> % (stat, p))
+    <span class="k">if</span> p &gt; alpha:
+        <span class="p">print</span>(<span class="s">f"Data is Normally Distributed"</span>)
+    <span class="k">else</span>:
+        <span class="p">print</span>(<span class="s">f"Data is NOT Normally Distributed"</span>)
+    <span class="p">print</span>(<span class="s">"\n"</span>)</pre>
+        </div>
+      </td>
+    </tr>
+
+    <!-- ── SECTION: VARIANCE TESTS ── -->
+    <tr class="section-row">
+      <td colspan="3">
+        <div class="section-label" style="color:#c2410c">
+          Assumption Check — Variance Equality
+          <div class="section-line" style="background:rgba(194,65,12,0.2)"></div>
+        </div>
+      </td>
+    </tr>
+
+    <!-- Levene's -->
+    <tr class="data-row row-variance">
+      <td>
+        <div class="test-type-pill pill-variance">variance</div>
+        <div class="test-name">Levene's Test</div>
+        <div class="test-note">Robust to non-normality. Preferred for real-world data.</div>
+      </td>
+      <td>
+        <div class="eq-cell">
+          <div class="eq-main">
+            <div class="eq-row">W =
+              <span class="eq-frac">
+                <span class="eq-num">(N−k) · Σnᵢ(Z̄ᵢ−Z̄)²</span>
+                <span class="eq-den">(k−1) · ΣΣ(Zᵢⱼ−Z̄ᵢ)²</span>
+              </span>
+            </div>
+          </div>
+          <div class="eq-vars">
+            <span>Zᵢⱼ</span> = |xᵢⱼ − x̄ᵢ| (deviations)<br>
+            <span>k</span> = number of groups<br>
+            p &lt; 0.05 → unequal variances
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+          <pre><span class="k">from</span> <span class="m">scipy.stats</span> <span class="k">import</span> levene
+
+<span class="c"># Prepare the data for Levene's test</span>
+<span class="c"># We need a list of arrays, where each array contains the 'Ratio' values for a specific 'Sample_Name'</span>
+data_for_levene = [df_filtered[df_filtered[<span class="s">'Sample_Name'</span>] == name][<span class="s">'Ratio'</span>].values
+                   <span class="k">for</span> name <span class="k">in</span> df_filtered[<span class="s">'Sample_Name'</span>].unique()]
+
+<span class="c"># Perform Levene's test</span>
+stat, p = <span class="f">levene</span>(*data_for_levene)
+
+<span class="p">print</span>(<span class="s">"Levene's Test for Homogeneity of Variances (mNeonGreen/mCherry Ratio per Sample Type):\n"</span>)
+<span class="p">print</span>(<span class="s">f"Statistics=%.3f, p=%.3f"</span> % (stat, p))
+
+alpha = <span class="n">0.05</span> <span class="c"># Significance level</span>
+
+<span class="k">if</span> p &gt; alpha:
+    <span class="p">print</span>(<span class="s">f"Variances are equal across sample types"</span>)
+<span class="k">else</span>:
+    <span class="p">print</span>(<span class="s">f"Variances are NOT equal across sample types"</span>)</pre>
+        </div>
+      </td>
+    </tr>
+
+    <!-- ── SECTION: 1:1 PARAMETRIC ── -->
+    <tr class="section-row">
+      <td colspan="3">
+        <div class="section-label" style="color:#1d4ed8">
+          1 : 1 &nbsp;Pairwise — Parametric
+          <div class="section-line"></div>
+        </div>
+      </td>
+    </tr>
+
+    <!-- Student's t-test -->
+    <tr class="data-row row-param">
+      <td>
+        <div class="test-type-pill pill-param">parametric</div>
+        <div class="test-name">Student's t-test</div>
+        <div class="test-note">Equal variance, two independent groups</div>
+      </td>
+      <td>
+        <div class="eq-cell">
+          <div class="eq-main">
+            <div class="eq-row">t =
+              <span class="eq-frac">
+                <span class="eq-num">x̄₁ − x̄₂</span>
+                <span class="eq-den">sₚ · √(1/n₁ + 1/n₂)</span>
+              </span>
+            </div>
+          </div>
+          <div class="eq-vars">
+            <span>sₚ</span> = pooled std dev<br>
+            <span>x̄</span> = group mean<br>
+            <span>n</span> = group size
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+          <pre><span class="k">from</span> <span class="m">scipy.stats</span> <span class="k">import</span> ttest_ind
+
+<span class="c"># Extract the 'Ratio' data for 'Reporter_Norm_only' and 'Team1'</span>
+reporter_norm_only_data = df_filtered[df_filtered[<span class="s">'Sample_Name'</span>] == <span class="s">'Reporter_Norm_only'</span>][<span class="s">'Ratio'</span>]
+team1_data = df_filtered[df_filtered[<span class="s">'Sample_Name'</span>] == <span class="s">'Team1'</span>][<span class="s">'Ratio'</span>]
+
+<span class="c"># Perform the independent two-sample Student's t-test</span>
+<span class="c"># We set equal_var=True because Levene's test indicated equal variances</span>
+stat, p_value = <span class="f">ttest_ind</span>(reporter_norm_only_data, team1_data, equal_var=<span class="k">True</span>)
+
+<span class="p">print</span>(<span class="s">f"Student's t-test for Reporter_Norm_only vs. Team1:"</span>)
+<span class="p">print</span>(<span class="s">f"  t-statistic = {stat:.3f}"</span>)
+<span class="p">print</span>(<span class="s">f"  p-value = {p_value:.8f}"</span>) <span class="c"># show 8 decimal places</span>
+
+alpha = <span class="n">0.05</span> <span class="c"># Significance level</span>
+
+<span class="k">if</span> p_value &lt; alpha:
+    <span class="p">print</span>(<span class="s">f"There is a statistically significant difference between the means of Reporter_Norm_only and Team1."</span>)
+<span class="k">else</span>:
+    <span class="p">print</span>(<span class="s">f"There is no statistically significant difference between the means of Reporter_Norm_only and Team1."</span>)</pre>
+        </div>
+      </td>
+    </tr>
+
+    <!-- Welch's t-test -->
+    <tr class="data-row row-param">
+      <td>
+        <div class="test-type-pill pill-param">parametric</div>
+        <div class="test-name">Welch's t-test</div>
+        <div class="test-note">Unequal variance or unequal n</div>
+      </td>
+      <td>
+        <div class="eq-cell">
+          <div class="eq-main">
+            <div class="eq-row">t =
+              <span class="eq-frac">
+                <span class="eq-num">x̄₁ − x̄₂</span>
+                <span class="eq-den">√(s₁²/n₁ + s₂²/n₂)</span>
+              </span>
+            </div>
+          </div>
+          <div class="eq-vars">
+            <span>s²</span> = group variance<br>
+            <span>df</span> via Welch–Satterthwaite<br>
+            <span>n</span> = group size
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+          <pre><span class="k">from</span> <span class="m">scipy.stats</span> <span class="k">import</span> ttest_ind
+
+<span class="c"># Extract the 'Ratio' data for 'Reporter_Norm_only' and 'Full_Length'</span>
+reporter_norm_only_data = df_filtered[df_filtered[<span class="s">'Sample_Name'</span>] == <span class="s">'Reporter_Norm_only'</span>][<span class="s">'Ratio'</span>]
+full_length_data = df_filtered[df_filtered[<span class="s">'Sample_Name'</span>] == <span class="s">'Full_Length'</span>][<span class="s">'Ratio'</span>]
+
+<span class="c"># Perform Welch's t-test (independent two-sample t-test with unequal variances)</span>
+<span class="c"># We set equal_var=False for Welch's t-test</span>
+stat_welch, p_value_welch = <span class="f">ttest_ind</span>(reporter_norm_only_data, full_length_data, equal_var=<span class="k">False</span>)
+
+<span class="p">print</span>(<span class="s">f"Welch's t-test for Reporter_Norm_only vs. Full_Length:"</span>)
+<span class="p">print</span>(<span class="s">f"  t-statistic = {stat_welch:.3f}"</span>)
+<span class="p">print</span>(<span class="s">f"  p-value = {p_value_welch:.8f}"</span>)
+
+alpha = <span class="n">0.05</span> <span class="c"># Significance level</span>
+
+<span class="k">if</span> p_value_welch &lt; alpha:
+    <span class="p">print</span>(<span class="s">f"There is a statistically significant difference between the means of Reporter_Norm_only and Full_Length."</span>)
+<span class="k">else</span>:
+    <span class="p">print</span>(<span class="s">f"There is no statistically significant difference between the means of Reporter_Norm_only and Full_Length."</span>)</pre>
+        </div>
+      </td>
+    </tr>
+
+    <!-- ── SECTION: 1:1 NON-PARAMETRIC ── -->
+    <tr class="section-row">
+      <td colspan="3">
+        <div class="section-label" style="color:#9d174d">
+          1 : 1 &nbsp;Pairwise — Non-Parametric
+          <div class="section-line" style="background:rgba(157,23,77,0.2)"></div>
+        </div>
+      </td>
+    </tr>
+
+    <!-- Mann-Whitney -->
+    <tr class="data-row row-nonpar">
+      <td>
+        <div class="test-type-pill pill-nonpar">non-parametric</div>
+        <div class="test-name">Mann-Whitney U</div>
+        <div class="test-note">Non-normal data, rank-based</div>
+      </td>
+      <td>
+        <div class="eq-cell">
+          <div class="eq-main">
+            <div class="eq-row">U₁ = n₁n₂ +
+              <span class="eq-frac">
+                <span class="eq-num">n₁(n₁+1)</span>
+                <span class="eq-den">2</span>
+              </span>
+              − R₁
+            </div>
+          </div>
+          <div class="eq-vars">
+            <span>R₁</span> = sum of ranks (group 1)<br>
+            <span>n</span> = group sizes<br>
+            <span>U</span> = min(U₁, U₂)
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+          <pre><span class="k">from</span> <span class="m">scipy.stats</span> <span class="k">import</span> mannwhitneyu
+
+<span class="c"># Extract the 'Ratio' data for 'Reporter_Norm_only' and 'Full_Length'</span>
+reporter_norm_only_data = df_filtered[df_filtered[<span class="s">'Sample_Name'</span>] == <span class="s">'Reporter_Norm_only'</span>][<span class="s">'Ratio'</span>]
+full_length_data = df_filtered[df_filtered[<span class="s">'Sample_Name'</span>] == <span class="s">'Full_Length'</span>][<span class="s">'Ratio'</span>]
+
+<span class="c"># Perform the Mann-Whitney U test</span>
+stat_mw, p_value_mw = <span class="f">mannwhitneyu</span>(reporter_norm_only_data, full_length_data, alternative=<span class="s">'two-sided'</span>)
+
+<span class="p">print</span>(<span class="s">f"Mann-Whitney U Test for Reporter_Norm_only vs. Full_Length:"</span>)
+<span class="p">print</span>(<span class="s">f"  U-statistic = {stat_mw:.3f}"</span>)
+<span class="p">print</span>(<span class="s">f"  p-value = {p_value_mw:.8f}"</span>)
+
+alpha = <span class="n">0.05</span> <span class="c"># Significance level</span>
+
+<span class="k">if</span> p_value_mw &lt; alpha:
+    <span class="p">print</span>(<span class="s">f"There is a statistically significant difference between the medians of Reporter_Norm_only and Full_Length."</span>)
+<span class="k">else</span>:
+    <span class="p">print</span>(<span class="s">f"There is no statistically significant difference between the medians of Reporter_Norm_only and Full_Length."</span>)</pre>
+        </div>
+      </td>
+    </tr>
+
+
+    <!-- Paired t-test -->
+    <tr class="data-row row-param">
+      <td>
+        <div class="test-type-pill pill-param">parametric</div>
+        <div class="test-name">Paired t-test</div>
+        <div class="test-note">Normal differences, two matched/repeated measurements</div>
+      </td>
+      <td>
+        <div class="eq-cell">
+          <div class="eq-main">
+            <div class="eq-row">t =
+              <span class="eq-frac">
+                <span class="eq-num">d̄</span>
+                <span class="eq-den">s_d / √n</span>
+              </span>
+            </div>
+          </div>
+          <div class="eq-vars">
+            <span>d̄</span> = mean of pairwise differences<br>
+            <span>s_d</span> = std dev of differences<br>
+            <span>n</span> = number of pairs
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+          <pre><span class="c"># Paired t-test (before/after or matched pairs)</span>
+<span class="k">from</span> <span class="m">scipy</span> <span class="k">import</span> stats
+
+before = [<span class="n">85</span>, <span class="n">90</span>, <span class="n">78</span>, <span class="n">92</span>, <span class="n">88</span>, <span class="n">76</span>]
+after  = [<span class="n">88</span>, <span class="n">95</span>, <span class="n">80</span>, <span class="n">94</span>, <span class="n">91</span>, <span class="n">79</span>]
+
+t_stat, p_val = stats.<span class="f">ttest_rel</span>(before, after)
+
+<span class="p">print</span>(<span class="s">f"t-statistic: {t_stat:.4f}"</span>)
+<span class="p">print</span>(<span class="s">f"p-value:     {p_val:.4f}"</span>)
+<span class="p">print</span>(<span class="s">f"Significant: {p_val &lt; 0.05}"</span>)</pre>
+        </div>
+      </td>
+    </tr>
+
+    <!-- Wilcoxon Signed-Rank -->
+    <tr class="data-row row-nonpar">
+      <td>
+        <div class="test-type-pill pill-nonpar">non-parametric</div>
+        <div class="test-name">Wilcoxon Signed-Rank</div>
+        <div class="test-note">Non-normal differences, two matched/repeated measurements</div>
+      </td>
+      <td>
+        <div class="eq-cell">
+          <div class="eq-main">
+            <div class="eq-row">W = Σ [ sgn(d) · R(|d|) ]</div>
+          </div>
+          <div class="eq-vars">
+            <span>d</span> = pairwise differences<br>
+            <span>R(|d|)</span> = rank of |d|<br>
+            <span>W</span> = sum of signed ranks
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+          <pre><span class="c"># Wilcoxon Signed-Rank test (non-parametric paired)</span>
+<span class="k">from</span> <span class="m">scipy</span> <span class="k">import</span> stats
+
+before = [<span class="n">85</span>, <span class="n">90</span>, <span class="n">78</span>, <span class="n">92</span>, <span class="n">88</span>, <span class="n">76</span>]
+after  = [<span class="n">88</span>, <span class="n">95</span>, <span class="n">80</span>, <span class="n">94</span>, <span class="n">91</span>, <span class="n">79</span>]
+
+w_stat, p_val = stats.<span class="f">wilcoxon</span>(before, after)
+
+<span class="p">print</span>(<span class="s">f"W-statistic: {w_stat:.4f}"</span>)
+<span class="p">print</span>(<span class="s">f"p-value:     {p_val:.4f}"</span>)
+<span class="p">print</span>(<span class="s">f"Significant: {p_val &lt; 0.05}"</span>)</pre>
+        </div>
+      </td>
+    </tr>
+
+    <!-- ── SECTION: ANOVA ── -->
+    <tr class="section-row">
+      <td colspan="3">
+        <div class="section-label" style="color:#15803d">
+          Multi-Group Analysis
+          <div class="section-line" style="background:rgba(21,128,61,0.2)"></div>
+        </div>
+      </td>
+    </tr>
+
+    <!-- One-Way ANOVA -->
+    <tr class="data-row row-anova">
+      <td>
+        <div class="test-type-pill pill-anova">ANOVA</div>
+        <div class="test-name">One-Way ANOVA</div>
+        <div class="test-note">3+ groups, equal variance, normal data</div>
+      </td>
+      <td>
+        <div class="eq-cell">
+          <div class="eq-main">
+            <div class="eq-row">F =
+              <span class="eq-frac">
+                <span class="eq-num">MS<sub>between</sub></span>
+                <span class="eq-den">MS<sub>within</sub></span>
+              </span>
+            </div>
+          </div>
+          <div class="eq-vars">
+            <span>MS</span> = mean square<br>
+            <span>SS_b</span> = between-group SS<br>
+            <span>SS_w</span> = within-group SS
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+          <pre><span class="k">from</span> <span class="m">scipy.stats</span> <span class="k">import</span> f_oneway
+
+sample_groups = [df_filtered[df_filtered[<span class="s">'Sample_Name'</span>] == name][<span class="s">'Ratio'</span>].values
+                 <span class="k">for</span> name <span class="k">in</span> df_filtered[<span class="s">'Sample_Name'</span>].unique()]
+
+stat_anova, p_value_anova = <span class="f">f_oneway</span>(*sample_groups)
+
+<span class="p">print</span>(<span class="s">"One-Way ANOVA (mNeonGreen/mCherry Ratio across Sample Types):\n"</span>)
+<span class="p">print</span>(<span class="s">f"F-statistic = {stat_anova:.3f}, p = {p_value_anova:.30f}"</span>)
+
+alpha = <span class="n">0.05</span> <span class="c"># Significance level</span>
+
+<span class="k">if</span> p_value_anova &lt; alpha:
+    <span class="p">print</span>(<span class="s">f"There is a statistically significant difference in means between at least two sample types."</span>)
+<span class="k">else</span>:
+    <span class="p">print</span>(<span class="s">f"There is no statistically significant difference in means between the sample types."</span>)</pre>
+        </div>
+      </td>
+    </tr>
+
+
+    <!-- ── SECTION: POST-HOC ── -->
+
+    <!-- Tukey's HSD -->
+    <tr class="data-row row-posthoc">
+      <td>
+        <div class="test-type-pill pill-posthoc">post-hoc</div>
+        <div class="test-name">Tukey's HSD</div>
+        <div class="test-note">Equal n, equal variance; all pairwise comparisons</div>
+      </td>
+      <td>
+        <div class="eq-cell">
+          <div class="eq-main">
+            <div class="eq-row">q =
+              <span class="eq-frac">
+                <span class="eq-num">x̄ᵢ − x̄ⱼ</span>
+                <span class="eq-den">√(MS<sub>w</sub> / n)</span>
+              </span>
+            </div>
+          </div>
+          <div class="eq-vars">
+            <span>q</span> = studentized range stat<br>
+            <span>MS_w</span> = within-group MS<br>
+            <span>n</span> = group size
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+          <pre><span class="k">from</span> <span class="m">statsmodels.stats.multicomp</span> <span class="k">import</span> pairwise_tukeyhsd
+
+tukey_results = <span class="f">pairwise_tukeyhsd</span>(endog=df_filtered[<span class="s">'Ratio'</span>], groups=df_filtered[<span class="s">'Sample_Name'</span>], alpha=<span class="n">0.05</span>)
+
+<span class="c"># Extract results into a DataFrame</span>
+tukey_df = pd.<span class="f">DataFrame</span>(data=tukey_results._results_table.data[<span class="n">1</span>:],
+                         columns=tukey_results._results_table.data[<span class="n">0</span>])
+
+<span class="p">print</span>(<span class="s">"Tukey's HSD Post-Hoc Test Results (mNeonGreen/mCherry Ratio):"</span>)
+<span class="f">display</span>(tukey_df.style.<span class="f">format</span>({<span class="s">'p_adjusted'</span>: <span class="s">'{:.20f}'</span>}))</pre>
+        </div>
+      </td>
+    </tr>
+
+    <!-- Games-Howell -->
+    <tr class="data-row row-posthoc">
+      <td>
+        <div class="test-type-pill pill-posthoc">post-hoc</div>
+        <div class="test-name">Games-Howell</div>
+        <div class="test-note">Unequal n or unequal variance</div>
+      </td>
+      <td>
+        <div class="eq-cell">
+          <div class="eq-main">
+            <div class="eq-row">q* =
+              <span class="eq-frac">
+                <span class="eq-num">x̄ᵢ − x̄ⱼ</span>
+                <span class="eq-den">√(s²ᵢ/nᵢ + s²ⱼ/nⱼ)</span>
+              </span>
+            </div>
+          </div>
+          <div class="eq-vars">
+            <span>df</span> via Welch-Satterthwaite<br>
+            <span>s²</span> = per-group variance<br>
+            critical value from q distribution
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+          <pre><span class="k">import</span> <span class="m">pingouin</span> <span class="k">as</span> pg
+
+<span class="c"># Perform Games-Howell post-hoc test using pingouin</span>
+gameshowell_pg_results = pg.<span class="f">pairwise_gameshowell</span>(
+    data=df_filtered, dv=<span class="s">'Ratio'</span>, between=<span class="s">'Sample_Name'</span>)
+
+<span class="c"># Display the results</span>
+<span class="p">print</span>(<span class="s">"Games-Howell Post-Hoc Test Results (via Pingouin):"</span>)
+<span class="f">display</span>(gameshowell_pg_results.style.<span class="f">format</span>(formatter={<span class="s">'p-unc'</span>: <span class="s">'{:.10f}'</span>, <span class="s">'p-gameshowell'</span>: <span class="s">'{:.10f}'</span>}))</pre>
+        </div>
+      </td>
+    </tr>
+
+    <!-- Kruskal-Wallis -->
+    <tr class="data-row row-nonpar">
+      <td>
+        <div class="test-type-pill pill-nonpar">non-parametric</div>
+        <div class="test-name">Kruskal-Wallis</div>
+        <div class="test-note">Non-normal data, 3+ independent groups. Rank-based ANOVA alternative.</div>
+      </td>
+      <td>
+        <div class="eq-cell">
+          <div class="eq-main" style="font-size:11px;">
+            <div class="eq-row" style="line-height:2;">H =
+              <span class="eq-frac" style="font-size:0.9em;">
+                <span class="eq-num">12</span>
+                <span class="eq-den">N(N+1)</span>
+              </span>
+              · Σ
+              <span class="eq-frac" style="font-size:0.9em;">
+                <span class="eq-num">Rᵢ²</span>
+                <span class="eq-den">nᵢ</span>
+              </span>
+              − 3(N+1)
+            </div>
+          </div>
+          <div class="eq-vars">
+            <span>Rᵢ</span> = sum of ranks in group i<br>
+            <span>nᵢ</span> = size of group i<br>
+            <span>N</span> = total sample size
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+          <pre><span class="k">from</span> <span class="m">scipy.stats</span> <span class="k">import</span> kruskal
+
+sample_groups = [df_filtered[df_filtered[<span class="s">'Sample_Name'</span>] == name][<span class="s">'Ratio'</span>].values
+                 <span class="k">for</span> name <span class="k">in</span> df_filtered[<span class="s">'Sample_Name'</span>].unique()]
+
+stat, p = <span class="f">kruskal</span>(*sample_groups)
+
+<span class="p">print</span>(<span class="s">"Kruskal-Wallis test (mNeonGreen/mCherry Ratio across Sample Types):\n"</span>)
+<span class="p">print</span>(<span class="s">f"Statistics (H-value)=%.3f, p=%.3f"</span> % (stat, p))
+
+alpha = <span class="n">0.05</span> <span class="c"># Significance level</span>
+
+<span class="k">if</span> p &lt; alpha:
+    <span class="p">print</span>(<span class="s">f"There is a statistically significant difference in medians between at least two sample types"</span>)
+<span class="k">else</span>:
+    <span class="p">print</span>(<span class="s">f"There is no statistically significant difference in medians between the sample types"</span>)</pre>
+        </div>
+      </td>
+    </tr>
+
+    <!-- Dunn's Test -->
+    <tr class="data-row row-nonpar">
+      <td>
+        <div class="test-type-pill pill-nonpar">non-parametric</div>
+        <div class="test-name">Dunn's Test</div>
+        <div class="test-note">Post-hoc for Kruskal-Wallis; pairwise rank-based comparisons</div>
+      </td>
+      <td>
+        <div class="eq-cell">
+          <div class="eq-main">
+            <div class="eq-row">z<sub>ij</sub> =
+              <span class="eq-frac">
+                <span class="eq-num">R̄ᵢ − R̄ⱼ</span>
+                <span class="eq-den">
+                  √<span class="eq-frac" style="font-size:0.9em">
+                    <span class="eq-num">N(N+1)</span>
+                    <span class="eq-den">12</span>
+                  </span>
+                  ·
+                  <span class="eq-frac" style="font-size:0.9em">
+                    <span class="eq-num">nᵢ + nⱼ</span>
+                    <span class="eq-den">nᵢ · nⱼ</span>
+                  </span>
+                </span>
+              </span>
+            </div>
+          </div>
+          <div class="eq-vars">
+            <span>R̄ᵢ</span> = mean rank of group i<br>
+            <span>N</span> = total sample size<br>
+            <span>nᵢ</span> = size of group i
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+          <pre><span class="k">import</span> <span class="m">scikit_posthocs</span> <span class="k">as</span> sp
+
+sample_names = df_filtered[<span class="s">'Sample_Name'</span>].unique()
+data_for_dunn = [df_filtered[df_filtered[<span class="s">'Sample_Name'</span>] == name][<span class="s">'Ratio'</span>].values
+                 <span class="k">for</span> name <span class="k">in</span> sample_names]
+
+<span class="c"># Perform Dunn's test without p-value correction</span>
+dunn_results = sp.<span class="f">posthoc_dunn</span>(data_for_dunn)
+
+dunn_results.columns = sample_names
+dunn_results.index = sample_names
+
+<span class="k">def</span> <span class="f">highlight_significant</span>(val):
+    <span class="k">return</span> <span class="s">'background-color: red'</span> <span class="k">if</span> val &lt; <span class="n">0.05</span> <span class="k">else</span> <span class="s">''</span>
+
+<span class="p">print</span>(<span class="s">"Dunn's Post-Hoc Test Results (unadjusted p-values with significant values highlighted):"</span>)
+<span class="f">display</span>(dunn_results.style.<span class="f">map</span>(highlight_significant))</pre>
+        </div>
+      </td>
+    </tr>
+
+    <!-- Bonferroni -->
+    <tr class="data-row row-posthoc">
+      <td>
+        <div class="test-type-pill pill-posthoc">post-hoc</div>
+        <div class="test-name">Bonferroni</div>
+        <div class="test-note">Conservative; divide α by # comparisons</div>
+      </td>
+      <td>
+        <div class="eq-cell">
+          <div class="eq-main">
+            α' = α / m
+          </div>
+          <div class="eq-vars">
+            <span>α</span> = desired significance level<br>
+            <span>m</span> = number of comparisons<br>
+            reject H₀ if p &lt; α'
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+          <pre><span class="k">import</span> <span class="m">scikit_posthocs</span> <span class="k">as</span> sp
+
+<span class="c"># Perform Dunn's test with Bonferroni p-value correction</span>
+dunn_bonferroni_results = sp.<span class="f">posthoc_dunn</span>(data_for_dunn, p_adjust=<span class="s">'bonferroni'</span>)
+
+<span class="c"># Label the rows and columns with sample names</span>
+dunn_bonferroni_results.columns = sample_names
+dunn_bonferroni_results.index = sample_names
+
+<span class="k">def</span> <span class="f">highlight_significant</span>(val):
+    <span class="k">return</span> <span class="s">'background-color: red'</span> <span class="k">if</span> val &lt; <span class="n">0.05</span> <span class="k">else</span> <span class="s">''</span>
+
+<span class="p">print</span>(<span class="s">"Dunn's Post-Hoc Test Results (p-values adjusted using Bonferroni):"</span>)
+<span class="f">display</span>(dunn_bonferroni_results.style.<span class="f">map</span>(highlight_significant))</pre>
+        </div>
+      </td>
+    </tr>
+
+    <!-- Benjamini-Hochberg -->
+    <tr class="data-row row-posthoc">
+      <td>
+        <div class="test-type-pill pill-posthoc">p-adjustment</div>
+        <div class="test-name">Benjamini-Hochberg</div>
+        <div class="test-note">FDR control; less conservative than Bonferroni, more statistical power</div>
+      </td>
+      <td>
+        <div class="eq-cell">
+          <div class="eq-main">
+            <div class="eq-row">reject if p<sub>(i)</sub> ≤
+              <span class="eq-frac">
+                <span class="eq-num">i · q</span>
+                <span class="eq-den">m</span>
+              </span>
+            </div>
+          </div>
+          <div class="eq-vars">
+            <span>p<sub>(i)</sub></span> = i-th ranked p-value<br>
+            <span>q</span> = desired FDR threshold<br>
+            <span>m</span> = total comparisons
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+          <pre><span class="k">import</span> <span class="m">scikit_posthocs</span> <span class="k">as</span> sp
+
+<span class="c"># Perform Dunn's test with Benjamini-Hochberg (FDR) p-value correction</span>
+dunn_fdr_results = sp.<span class="f">posthoc_dunn</span>(data_for_dunn, p_adjust=<span class="s">'fdr_bh'</span>)
+
+<span class="c"># Label the rows and columns with sample names</span>
+dunn_fdr_results.columns = sample_names
+dunn_fdr_results.index = sample_names
+
+<span class="k">def</span> <span class="f">highlight_significant</span>(val):
+    <span class="k">return</span> <span class="s">'background-color: red'</span> <span class="k">if</span> val &lt; <span class="n">0.05</span> <span class="k">else</span> <span class="s">''</span>
+
+<span class="p">print</span>(<span class="s">"Dunn's Post-Hoc Test Results (p-values adjusted using Benjamini-Hochberg):"</span>)
+<span class="f">display</span>(dunn_fdr_results.style.<span class="f">map</span>(highlight_significant))</pre>
+        </div>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+</div>
+
+<div class="footer">
+  <div class="footer-note">
+    <strong>Libraries:</strong> scipy · statsmodels · pingouin · pandas &nbsp;|&nbsp;
+    Install missing: <strong style="color:var(--green)">!pip install pingouin statsmodels</strong>
+  </div>
+  <div class="footer-note" style="text-align:right">
+    Always check assumptions before running tests.<br>
+    Normality → Shapiro-Wilk &nbsp;·&nbsp; Variance equality → Levene's
+  </div>
+</div>
+
+<script>
+function copyCode(btn) {
+  const pre = btn.nextElementSibling;
+  const text = pre.innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'copied!';
+    btn.style.background = 'var(--accent)';
+    btn.style.color = '#0b0c10';
+    setTimeout(() => {
+      btn.textContent = 'copy';
+      btn.style.background = '';
+      btn.style.color = '';
+    }, 1500);
+  });
+}
+</script>
+
+<script>
+function showNormTip(evt) {
+  const tip = document.getElementById('norm-tooltip');
+  if (!tip) return;
+  // Position tooltip near the hovered box but always visible
+  const svg = evt.target.closest('svg');
+  const svgRect = svg.getBoundingClientRect();
+  const viewBox = svg.viewBox.baseVal;
+  const scaleX = viewBox.width / svgRect.width;
+  const scaleY = viewBox.height / svgRect.height;
+  const mx = (evt.clientX - svgRect.left) * scaleX;
+  const my = (evt.clientY - svgRect.top) * scaleY;
+
+  // Anchor tooltip: prefer above the cursor, shift left if near right edge
+  let tx = Math.min(mx - 120, viewBox.width - 260);
+  let ty = Math.max(my - 175, 5);
+
+  tip.setAttribute('transform', `translate(${tx - 200}, ${ty - 10})`);
+  tip.style.display = 'block';
+}
+
+function hideNormTip() {
+  const tip = document.getElementById('norm-tooltip');
+  if (tip) tip.style.display = 'none';
+}
+</script>
+
+
+<script>
+function showVarTip(evt) {
+  const tip = document.getElementById('var-tooltip');
+  if (!tip) return;
+  const svg = evt.target.closest('svg');
+  const svgRect = svg.getBoundingClientRect();
+  const viewBox = svg.viewBox.baseVal;
+  const scaleX = viewBox.width / svgRect.width;
+  const scaleY = viewBox.height / svgRect.height;
+  const mx = (evt.clientX - svgRect.left) * scaleX;
+  const my = (evt.clientY - svgRect.top) * scaleY;
+
+  let tx = Math.min(mx - 120, viewBox.width - 260);
+  let ty = Math.max(my - 175, 5);
+
+  tip.setAttribute('transform', `translate(${tx}, ${ty})`);
+  tip.style.display = 'block';
+}
+
+function hideVarTip() {
+  const tip = document.getElementById('var-tooltip');
+  if (tip) tip.style.display = 'none';
+}
+</script>
+
+
+<script>
+function showTip(evt, id) {
+  const tip = document.getElementById(id);
+  if (!tip) return;
+  const svg = evt.target.closest('svg');
+  const svgRect = svg.getBoundingClientRect();
+  const viewBox = svg.viewBox.baseVal;
+  const scaleX = viewBox.width / svgRect.width;
+  const scaleY = viewBox.height / svgRect.height;
+  const mx = (evt.clientX - svgRect.left) * scaleX;
+  const my = (evt.clientY - svgRect.top) * scaleY;
+  // Place tooltip above & to the left of cursor, clamped to viewbox
+  let tx = Math.min(Math.max(mx - 115, 10), viewBox.width - 250);
+  let ty = Math.max(my - 180, 5);
+  tip.setAttribute('transform', `translate(${tx}, ${ty})`);
+  tip.style.display = 'block';
+}
+
+function hideTip(id) {
+  const tip = document.getElementById(id);
+  if (tip) tip.style.display = 'none';
+}
+</script>
+
+</body>
+</html>

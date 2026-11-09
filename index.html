@@ -1387,7 +1387,7 @@
           <pre><span class="k">from</span> <span class="m">scipy.stats</span> <span class="k">import</span> shapiro
 <span class="k">import</span> <span class="m">statsmodels.api</span> <span class="k">as</span> sm
 
-<span class="p">print</span>(<span class="s">"Shapiro-Wilk Test for Normality (mNeonGreen/mCherry Ratio per Sample Type):\n"</span>)
+<span class="p">print</span>(<span class="s">"Shapiro-Wilk Test for Normality:\n"</span>)
 
 alpha = <span class="n">0.05</span> <span class="c"># Significance level</span>
 
@@ -1452,7 +1452,7 @@ data_for_levene = [df_filtered[df_filtered[<span class="s">'Sample_Name'</span>]
 <span class="c"># Perform Levene's test</span>
 stat, p = <span class="f">levene</span>(*data_for_levene)
 
-<span class="p">print</span>(<span class="s">"Levene's Test for Homogeneity of Variances (mNeonGreen/mCherry Ratio per Sample Type):\n"</span>)
+<span class="p">print</span>(<span class="s">"Levene's Test for Homogeneity of Variances:\n"</span>)
 <span class="p">print</span>(<span class="s">f"Statistics=%.3f, p=%.3f"</span> % (stat, p))
 
 alpha = <span class="n">0.05</span> <span class="c"># Significance level</span>
@@ -1504,24 +1504,24 @@ alpha = <span class="n">0.05</span> <span class="c"># Significance level</span>
           <button class="copy-btn" onclick="copyCode(this)">copy</button>
           <pre><span class="k">from</span> <span class="m">scipy.stats</span> <span class="k">import</span> ttest_ind
 
-<span class="c"># Extract the 'Ratio' data for 'Reporter_Norm_only' and 'Team1'</span>
+<span class="c"># Extract the 'Ratio' data for 'Reporter_Norm_only' and 'Truncation1'</span>
 reporter_norm_only_data = df_filtered[df_filtered[<span class="s">'Sample_Name'</span>] == <span class="s">'Reporter_Norm_only'</span>][<span class="s">'Ratio'</span>]
-team1_data = df_filtered[df_filtered[<span class="s">'Sample_Name'</span>] == <span class="s">'Team1'</span>][<span class="s">'Ratio'</span>]
+truncation1_data = df_filtered[df_filtered[<span class="s">'Sample_Name'</span>] == <span class="s">'Truncation1'</span>][<span class="s">'Ratio'</span>]
 
 <span class="c"># Perform the independent two-sample Student's t-test</span>
 <span class="c"># We set equal_var=True because Levene's test indicated equal variances</span>
-stat, p_value = <span class="f">ttest_ind</span>(reporter_norm_only_data, team1_data, equal_var=<span class="k">True</span>)
+stat, p_value = <span class="f">ttest_ind</span>(reporter_norm_only_data, truncation1_data, equal_var=<span class="k">True</span>)
 
-<span class="p">print</span>(<span class="s">f"Student's t-test for Reporter_Norm_only vs. Team1:"</span>)
+<span class="p">print</span>(<span class="s">f"Student's t-test for Reporter_Norm_only vs. Truncation1:"</span>)
 <span class="p">print</span>(<span class="s">f"  t-statistic = {stat:.3f}"</span>)
 <span class="p">print</span>(<span class="s">f"  p-value = {p_value:.8f}"</span>) <span class="c"># show 8 decimal places</span>
 
 alpha = <span class="n">0.05</span> <span class="c"># Significance level</span>
 
 <span class="k">if</span> p_value &lt; alpha:
-    <span class="p">print</span>(<span class="s">f"There is a statistically significant difference between the means of Reporter_Norm_only and Team1."</span>)
+    <span class="p">print</span>(<span class="s">f"There is a statistically significant difference between the two means."</span>)
 <span class="k">else</span>:
-    <span class="p">print</span>(<span class="s">f"There is no statistically significant difference between the means of Reporter_Norm_only and Team1."</span>)</pre>
+    <span class="p">print</span>(<span class="s">f"There is no statistically significant difference between the two means."</span>)</pre>
         </div>
       </td>
     </tr>
@@ -1555,24 +1555,24 @@ alpha = <span class="n">0.05</span> <span class="c"># Significance level</span>
           <button class="copy-btn" onclick="copyCode(this)">copy</button>
           <pre><span class="k">from</span> <span class="m">scipy.stats</span> <span class="k">import</span> ttest_ind
 
-<span class="c"># Extract the 'Ratio' data for 'Reporter_Norm_only' and 'Full_Length'</span>
+<span class="c"># Extract the 'Ratio' data for 'Reporter_Norm_only' and 'Truncation1'</span>
 reporter_norm_only_data = df_filtered[df_filtered[<span class="s">'Sample_Name'</span>] == <span class="s">'Reporter_Norm_only'</span>][<span class="s">'Ratio'</span>]
-full_length_data = df_filtered[df_filtered[<span class="s">'Sample_Name'</span>] == <span class="s">'Full_Length'</span>][<span class="s">'Ratio'</span>]
+truncation1_data = df_filtered[df_filtered[<span class="s">'Sample_Name'</span>] == <span class="s">'Truncation1'</span>][<span class="s">'Ratio'</span>]
 
 <span class="c"># Perform Welch's t-test (independent two-sample t-test with unequal variances)</span>
 <span class="c"># We set equal_var=False for Welch's t-test</span>
-stat_welch, p_value_welch = <span class="f">ttest_ind</span>(reporter_norm_only_data, full_length_data, equal_var=<span class="k">False</span>)
+stat_welch, p_value_welch = <span class="f">ttest_ind</span>(reporter_norm_only_data, truncation1_data, equal_var=<span class="k">False</span>)
 
-<span class="p">print</span>(<span class="s">f"Welch's t-test for Reporter_Norm_only vs. Full_Length:"</span>)
+<span class="p">print</span>(<span class="s">f"Welch's t-test for Reporter_Norm_only vs. Truncation1:"</span>)
 <span class="p">print</span>(<span class="s">f"  t-statistic = {stat_welch:.3f}"</span>)
 <span class="p">print</span>(<span class="s">f"  p-value = {p_value_welch:.8f}"</span>)
 
 alpha = <span class="n">0.05</span> <span class="c"># Significance level</span>
 
 <span class="k">if</span> p_value_welch &lt; alpha:
-    <span class="p">print</span>(<span class="s">f"There is a statistically significant difference between the means of Reporter_Norm_only and Full_Length."</span>)
+    <span class="p">print</span>(<span class="s">f"There is a statistically significant difference between the two means."</span>)
 <span class="k">else</span>:
-    <span class="p">print</span>(<span class="s">f"There is no statistically significant difference between the means of Reporter_Norm_only and Full_Length."</span>)</pre>
+    <span class="p">print</span>(<span class="s">f"There is no statistically significant difference between the two means."</span>)</pre>
         </div>
       </td>
     </tr>
@@ -1617,12 +1617,12 @@ alpha = <span class="n">0.05</span> <span class="c"># Significance level</span>
           <button class="copy-btn" onclick="copyCode(this)">copy</button>
           <pre><span class="k">from</span> <span class="m">scipy.stats</span> <span class="k">import</span> mannwhitneyu
 
-<span class="c"># Extract the 'Ratio' data for 'Reporter_Norm_only' and 'Full_Length'</span>
+<span class="c"># Extract the 'Ratio' data for 'Reporter_Norm_only' and 'Truncation1'</span>
 reporter_norm_only_data = df_filtered[df_filtered[<span class="s">'Sample_Name'</span>] == <span class="s">'Reporter_Norm_only'</span>][<span class="s">'Ratio'</span>]
-full_length_data = df_filtered[df_filtered[<span class="s">'Sample_Name'</span>] == <span class="s">'Full_Length'</span>][<span class="s">'Ratio'</span>]
+truncation1_data = df_filtered[df_filtered[<span class="s">'Sample_Name'</span>] == <span class="s">'Truncation1'</span>][<span class="s">'Ratio'</span>]
 
 <span class="c"># Perform the Mann-Whitney U test</span>
-stat_mw, p_value_mw = <span class="f">mannwhitneyu</span>(reporter_norm_only_data, full_length_data, alternative=<span class="s">'two-sided'</span>)
+stat_mw, p_value_mw = <span class="f">mannwhitneyu</span>(reporter_norm_only_data, truncation1_data, alternative=<span class="s">'two-sided'</span>)
 
 <span class="p">print</span>(<span class="s">f"Mann-Whitney U Test for Reporter_Norm_only vs. Full_Length:"</span>)
 <span class="p">print</span>(<span class="s">f"  U-statistic = {stat_mw:.3f}"</span>)
@@ -1631,9 +1631,9 @@ stat_mw, p_value_mw = <span class="f">mannwhitneyu</span>(reporter_norm_only_dat
 alpha = <span class="n">0.05</span> <span class="c"># Significance level</span>
 
 <span class="k">if</span> p_value_mw &lt; alpha:
-    <span class="p">print</span>(<span class="s">f"There is a statistically significant difference between the medians of Reporter_Norm_only and Full_Length."</span>)
+    <span class="p">print</span>(<span class="s">f"There is a statistically significant difference between two means."</span>)
 <span class="k">else</span>:
-    <span class="p">print</span>(<span class="s">f"There is no statistically significant difference between the medians of Reporter_Norm_only and Full_Length."</span>)</pre>
+    <span class="p">print</span>(<span class="s">f"There is no statistically significant difference between the two means."</span>)</pre>
         </div>
       </td>
     </tr>
@@ -1762,7 +1762,7 @@ sample_groups = [df_filtered[df_filtered[<span class="s">'Sample_Name'</span>] =
 
 stat_anova, p_value_anova = <span class="f">f_oneway</span>(*sample_groups)
 
-<span class="p">print</span>(<span class="s">"One-Way ANOVA (mNeonGreen/mCherry Ratio across Sample Types):\n"</span>)
+<span class="p">print</span>(<span class="s">"One-Way ANOVA:\n"</span>)
 <span class="p">print</span>(<span class="s">f"F-statistic = {stat_anova:.3f}, p = {p_value_anova:.30f}"</span>)
 
 alpha = <span class="n">0.05</span> <span class="c"># Significance level</span>
@@ -1813,7 +1813,7 @@ tukey_results = <span class="f">pairwise_tukeyhsd</span>(endog=df_filtered[<span
 tukey_df = pd.<span class="f">DataFrame</span>(data=tukey_results._results_table.data[<span class="n">1</span>:],
                          columns=tukey_results._results_table.data[<span class="n">0</span>])
 
-<span class="p">print</span>(<span class="s">"Tukey's HSD Post-Hoc Test Results (mNeonGreen/mCherry Ratio):"</span>)
+<span class="p">print</span>(<span class="s">"Tukey's HSD Post-Hoc Test Results:"</span>)
 <span class="f">display</span>(tukey_df.style.<span class="f">format</span>({<span class="s">'p_adjusted'</span>: <span class="s">'{:.20f}'</span>}))</pre>
         </div>
       </td>
@@ -1899,7 +1899,7 @@ sample_groups = [df_filtered[df_filtered[<span class="s">'Sample_Name'</span>] =
 
 stat, p = <span class="f">kruskal</span>(*sample_groups)
 
-<span class="p">print</span>(<span class="s">"Kruskal-Wallis test (mNeonGreen/mCherry Ratio across Sample Types):\n"</span>)
+<span class="p">print</span>(<span class="s">"Kruskal-Wallis test:\n"</span>)
 <span class="p">print</span>(<span class="s">f"Statistics (H-value)=%.3f, p=%.3f"</span> % (stat, p))
 
 alpha = <span class="n">0.05</span> <span class="c"># Significance level</span>
